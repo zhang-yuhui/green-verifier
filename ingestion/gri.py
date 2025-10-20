@@ -2,7 +2,7 @@ import re, requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from s3io import put_bytes, hash_bytes
+from ingestion.s3io import put_bytes, hash_bytes
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; GreenVerifier/0.1; +https://example.com)"}
 

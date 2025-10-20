@@ -1,8 +1,8 @@
-from config import CFG
-from db import fetch_companies, upsert_document_row
-from edgar import download_and_store_edgar
-from gri import fetch_latest_gri_pdf
-from company_pdf import fetch_esg_pdfs_from_site
+from ingestion.config import CFG
+from ingestion.db import fetch_companies, upsert_document_row
+from ingestion.edgar import download_and_store_edgar
+from ingestion.gri import fetch_latest_gri_pdf
+from ingestion.company_pdf import fetch_esg_pdfs_from_site
 
 def run(limit_companies=None, do_edgar=True, do_gri=True, do_site_fallback=True):
     companies = fetch_companies(limit=limit_companies)

@@ -3,7 +3,7 @@
 import re, requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-from s3io import put_bytes, hash_bytes
+from ingestion.s3io import put_bytes, hash_bytes
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; GreenVerifier/0.1)"}
 KEYWORDS = ["sustainability", "esg", "csr", "impact", "responsibility", "non-financial", "integrated", "report"]

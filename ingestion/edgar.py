@@ -1,8 +1,8 @@
 import requests
 from datetime import datetime
 from tqdm import tqdm
-from config import CFG
-from s3io import put_bytes, hash_bytes, polite_sleep
+from ingestion.config import CFG
+from ingestion.s3io import put_bytes, hash_bytes, polite_sleep
 
 HEADERS = {"User-Agent": CFG["sec"]["user_agent"]}
 

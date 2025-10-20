@@ -1,7 +1,7 @@
 import hashlib, io, time
 import boto3
 from botocore.config import Config
-from config import CFG
+from ingestion.config import CFG
 
 _s3 = boto3.client("s3", region_name=CFG["aws"]["region"],
                    config=Config(retries={"max_attempts": 5}))
