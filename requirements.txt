@@ -4,3 +4,10 @@ requests
 beautifulsoup4
 python-dotenv
 tqdm
+transformers
+torch
+sentence-transformers
+langchain
+pypdf
+faiss-cpu
+huggingface-hub
