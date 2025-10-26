@@ -1,0 +1,16 @@
+{
+  "total_files": 2,
+  "results": {
+    "jpmc.pdf": {
+      "status": "success",
+      "answer": "{\n  \"claims\": [\n    {\n      \"claim\": \"JPMorgan Chase has reduced energy consumption.\",\n      \"evidence\": \"2021 ESG Report (p. 17–18)\",\n      \"answer\": \"support\"\n    },\n    {\n      \"claim\": \"JPMorgan Chase has a management approach to address water withdrawal by source.\",\n      \"evidence\": \"2021 ESG Report (p. 18–19)\",\n      \"answer\": \"support\"\n    },\n    {\n      \"claim\": \"JPMorgan Chase has a management approach to address significant impacts of activities, products, and services on biodiversity.\",\n      \"evidence\": \"2021 ESG Report (p. 18–19) Environmental and Social Policy Framework (p. 3 I, p. 4 II. D, p. 5 II.E.2, p. 8 IV)\",\n      \"answer\": \"support\"\n    }\n  ]\n}",
+      "sources": [
+        "./data/jpmc.pdf"
+      ]
+    },
+    "visa.pdf": {
+      "status": "error",
+      "error": "CUDA out of memory. Tried to allocate 112.00 MiB. GPU 0 has a total capacity of 11.57 GiB of which 70.56 MiB is free. Including non-PyTorch memory, this process has 10.10 GiB memory in use. Of the allocated memory 9.66 GiB is allocated by PyTorch, and 206.03 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+    }
+  }
+}

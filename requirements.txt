@@ -7,7 +7,21 @@ tqdm
 transformers
 torch
 sentence-transformers
-langchain
 pypdf
 faiss-cpu
 huggingface-hub
+# Core LangChain packages
+langchain
+langchain-community
+langchain-huggingface
+langchain-text-splitters 
+
+# Vector store
+faiss-cpu>=1.8.0
+# faiss-gpu>=1.8.0  # Uncomment if you need GPU support
+
+
+pymupdf 
+ 
+accelerate 
+bitsandbytes
