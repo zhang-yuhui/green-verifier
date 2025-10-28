@@ -9,8 +9,11 @@
       ]
     },
     "visa.pdf": {
-      "status": "error",
-      "error": "CUDA out of memory. Tried to allocate 112.00 MiB. GPU 0 has a total capacity of 11.57 GiB of which 70.56 MiB is free. Including non-PyTorch memory, this process has 10.10 GiB memory in use. Of the allocated memory 9.66 GiB is allocated by PyTorch, and 206.03 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
+      "status": "success",
+      "answer": "{\n  \"claim1\": {\n    \"text\": \"Visa has a comprehensive approach to human rights assessments.\",\n    \"evidence\": \"Human Rights, page 49; Visa Modern Slavery Act Transparency Statement\",\n    \"answer\": \"support\"\n  },\n  \"claim2\": {\n    \"text\": \"Visa does not disclose the number of new suppliers screened using environmental criteria.\",\n    \"evidence\": \"Supplier Environmental Assessment, page 48\",\n    \"answer\": \"support\"\n  },\n  \"claim3\": {\n    \"text\": \"Visa has a management approach to anti-corruption policies and procedures.\",\n    \"evidence\": \"Ethics & Compliance, page 46\",\n    \"answer\": \"support\"\n  }\n}",
+      "sources": [
+        "./data/visa.pdf"
+      ]
     }
   }
 }

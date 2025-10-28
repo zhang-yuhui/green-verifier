@@ -1,8 +1,9 @@
-# rag_s3_pipeline.py  (with verbose print logging)
+# rag_s3_pipeline.py  (with GPU memory management)
 import os
 import json
 import time
 import tempfile
+import gc  # <--- Added for garbage collection
 from collections import defaultdict
 from typing import Dict, Any, List, Tuple
 
@@ -47,6 +48,23 @@ def log(msg: str):
 def preview(txt: str, n: int = 160) -> str:
     txt = txt.replace("\n", " ").strip()
     return (txt[:n] + "…") if len(txt) > n else txt
+
+# --------------------------------------------------------------------------------------
+# NEW: GPU Memory Management Helper
+# --------------------------------------------------------------------------------------
+def clear_gpu_memory():
+    """Clear GPU memory and run garbage collection"""
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+    gc.collect()
+    
+def log_gpu_memory():
+    """Log current GPU memory usage"""
+    if torch.cuda.is_available() and VERBOSE:
+        allocated = torch.cuda.memory_allocated() / 1024**3  # GB
+        reserved = torch.cuda.memory_reserved() / 1024**3    # GB
+        log(f"[GPU] Allocated: {allocated:.2f}GB | Reserved: {reserved:.2f}GB")
 
 # --------------------------------------------------------------------------------------
 # 1) LLM (local HF)
@@ -98,6 +116,7 @@ def build_local_chat(
 
     llm = HuggingFacePipeline(pipeline=gen_pipe)
     log(f"[LLM] Model ready in {time.time()-start:.1f}s")
+    log_gpu_memory()
     return ChatHuggingFace(llm=llm)
 
 # --------------------------------------------------------------------------------------
@@ -147,6 +166,12 @@ def load_single_s3_doc(bucket: str, key: str, region: str) -> List:
     docs = loader.load()
     log(f"[LOAD] {kind} pages loaded: {len(docs)} | {s3_uri}")
 
+    # Clean up temp file immediately
+    try:
+        os.unlink(local_path)
+    except:
+        pass
+
     # normalize prefixes to detect origin
     edgar_pfx = CFG["aws"]["prefix_edgar"].rstrip("/") + "/"
     for d in docs:
@@ -187,7 +212,7 @@ def load_docs_from_s3_sources(cfg: Dict[str, Any], max_files: int | None = 5) ->
 
 
 # --------------------------------------------------------------------------------------
-# 3) RAG utilities
+# 3) RAG utilities (with memory cleanup)
 # --------------------------------------------------------------------------------------
 def build_retriever_from_docs(
     docs,
@@ -204,7 +229,10 @@ def build_retriever_from_docs(
     log(f"[EMB] model={embed_model} | device={_device}")
     vs = FAISS.from_documents(splits, embeddings)
     log(f"[INDEX] FAISS built")
-    return vs.as_retriever(search_kwargs={"k": k})
+    retriever = vs.as_retriever(search_kwargs={"k": k})
+    
+    # Return both retriever and references to objects we need to clean up
+    return retriever, vs, embeddings
 
 def format_docs(docs) -> str:
     return "\n\n".join(f"[{i+1}] " + d.page_content for i, d in enumerate(docs))
@@ -233,7 +261,7 @@ def build_rag_chain(retriever, chat_model):
     )
 
 # --------------------------------------------------------------------------------------
-# 4) Batch over S3 + save results (with step-by-step prints)
+# 4) Batch over S3 + save results (with GPU memory management)
 # --------------------------------------------------------------------------------------
 def process_batch_s3(
     cfg: Dict[str, Any],
@@ -247,7 +275,7 @@ def process_batch_s3(
     region = cfg["aws"]["region"]
     out_prefix = cfg["aws"]["output_prefix"].strip("/")
 
-    groups = load_docs_from_s3_sources(cfg, max_files = max_files)
+    groups = load_docs_from_s3_sources(cfg, max_files=max_files)
     if not groups:
         print("No .pdf/.html/.htm files found under edgar/ or site/")
         return {}
@@ -258,35 +286,87 @@ def process_batch_s3(
     results: Dict[str, Any] = {}
     for i, (s3_source, docs) in enumerate(groups.items(), 1):
         print(f"\n[{i}/{len(groups)}] Processing: {s3_source}")
+        
+        # Initialize variables for cleanup
+        retriever = None
+        vectorstore = None
+        embeddings = None
+        rag = None
+        
         try:
             t0 = time.time()
-            retriever = build_retriever_from_docs(docs)
+            log_gpu_memory()
+            
+            # Build retriever and keep references for cleanup
+            retriever, vectorstore, embeddings = build_retriever_from_docs(docs)
 
-            # ---- Preview what will be fed to the model (top-k retrieved)
-            k = retriever.search_kwargs.get("k", 4)
-            retrieved = retriever.get_relevant_documents(question)
-            log(f"[RETRIEVE] k={k} | got={len(retrieved)}")
-            for j, d in enumerate(retrieved, 1):
-                src = d.metadata.get("source", "unknown")
-                log(f"  - [{j}] {src} | {preview(d.page_content)}")
+            # Use torch.no_grad() to prevent gradient tracking
+            with torch.no_grad():
+                # Preview what will be fed to the model (top-k retrieved)
+                k = retriever.search_kwargs.get("k", 4)
+                retrieved = retriever.invoke(question)
+                log(f"[RETRIEVE] k={k} | got={len(retrieved)}")
+                for j, d in enumerate(retrieved, 1):
+                    src = d.metadata.get("source", "unknown")
+                    log(f"  - [{j}] {src} | {preview(d.page_content)}")
 
-            # ---- Build chain and run
-            rag = build_rag_chain(retriever, chat_model)
-            result = rag.invoke(question)
+                # Build chain and run
+                rag = build_rag_chain(retriever, chat_model)
+                result = rag.invoke(question)
 
-            # ---- Print a short answer preview
+            # Print a short answer preview
             ans_preview = result["answer"]
             if isinstance(ans_preview, (list, dict)):
-                ans_preview = json.dumps(ans_preview)  # in case your prompt returns JSON
+                ans_preview = json.dumps(ans_preview)
             log(f"[ANSWER] {preview(ans_preview, 240)}")
             log(f"[TIME] {time.time()-t0:.1f}s for {s3_source}")
 
-            results[s3_source] = {"status": "success", "answer": result["answer"], "sources": result["sources"]}
+            results[s3_source] = {
+                "status": "success",
+                "answer": result["answer"],
+                "sources": result["sources"]
+            }
             print("✓ Completed")
+            
         except Exception as e:
             results[s3_source] = {"status": "error", "error": str(e)}
             print(f"✗ Error: {e}")
+        
+        finally:
+            # ---- CRITICAL: Clean up memory after each file ----
+            log("[CLEANUP] Releasing memory...")
+            
+            # Delete the RAG chain
+            if rag is not None:
+                del rag
+            
+            # Delete retriever
+            if retriever is not None:
+                del retriever
+            
+            # Delete vectorstore and its index
+            if vectorstore is not None:
+                if hasattr(vectorstore, 'index'):
+                    del vectorstore.index
+                del vectorstore
+            
+            # Delete embeddings model
+            if embeddings is not None:
+                if hasattr(embeddings, 'client'):
+                    del embeddings.client
+                del embeddings
+            
+            # Clear the documents from this iteration
+            del docs
+            
+            # Force garbage collection
+            clear_gpu_memory()
+            log_gpu_memory()
+            log("[CLEANUP] Done")
 
+    # Final cleanup
+    clear_gpu_memory()
+    
     batch_results = {"total_files": len(groups), "results": results}
 
     s3 = boto3.client("s3", region_name=region)
@@ -298,6 +378,8 @@ def process_batch_s3(
         ContentType="application/json",
     )
     print(f"\nResults saved to s3://{bucket}/{out_key}")
+    
+    log_gpu_memory()
     return batch_results
 
 # --------------------------------------------------------------------------------------
@@ -315,7 +397,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.quiet:
-        VERBOSE = False  # mute detailed logs
+        VERBOSE = False
 
     claim_number = 3
     question = (
@@ -324,10 +406,10 @@ if __name__ == "__main__":
     )
 
     process_batch_s3(
-    cfg=CFG,
-    question=question,
-    model_id=args.model_id,
-    quant_4bit=args.quant_4bit,
-    output_filename=args.output,
-    max_files=args.max_files,   # <--- pass along
-)
+        cfg=CFG,
+        question=question,
+        model_id=args.model_id,
+        quant_4bit=args.quant_4bit,
+        output_filename=args.output,
+        max_files=args.max_files,
+    )

@@ -25,3 +25,6 @@ pymupdf
  
 accelerate 
 bitsandbytes
+
+html5lib
+lxml
