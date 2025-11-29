@@ -1,0 +1,1697 @@
+{
+  "split": "dev",
+  "items": [
+    {
+      "claim": "Government regulations limiting carbon dioxide and other greenhouse gas emissions and other environmental restrictions may increase compliance, operations, and merchandise costs, and other regulations affecting energy inputs could materially affect our profitability.",
+      "report_s3_key": "edgar/COST/2024-10-09_02f59d813c.html",
+      "candidates": [
+        {
+          "id": "7c404cd1-214c-514c-a4d4-238a83575531",
+          "collection": "reports_text",
+          "score": 0.7900412,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 34,
+          "sentence": null
+        },
+        {
+          "id": "82be64ec-3e94-56c2-9fa9-c5493ca93d77",
+          "collection": "reports_text",
+          "score": 0.478653,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 27,
+          "sentence": null
+        },
+        {
+          "id": "14e2750b-6a2f-5c0a-8fef-acea922781dd",
+          "collection": "reports_text",
+          "score": 0.46895844,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 19,
+          "sentence": null
+        },
+        {
+          "id": "468ae702-b093-595b-aa69-d7fc5a8e8763",
+          "collection": "reports_text",
+          "score": 0.4445863,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 33,
+          "sentence": null
+        },
+        {
+          "id": "2ee593b1-2b15-5d1b-8cfa-6de27378cefc",
+          "collection": "reports_text",
+          "score": 0.43483776,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 35,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "Failure or perceived failure to meet our ESG goals or expectations set by growing public interest and government regulation of ESG topics could result in reputational harm or adversely affect our business.",
+      "report_s3_key": "edgar/COST/2024-10-09_02f59d813c.html",
+      "candidates": [
+        {
+          "id": "2ee593b1-2b15-5d1b-8cfa-6de27378cefc",
+          "collection": "reports_text",
+          "score": 0.39279407,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "3444bfe9-d329-5c1a-8b42-e97d5b45bfb8",
+          "collection": "reports_text",
+          "score": 0.3911692,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 31,
+          "sentence": null
+        },
+        {
+          "id": "cbc79b59-9fce-59dd-a2c4-5bee0a3d6919",
+          "collection": "reports_text",
+          "score": 0.37542373,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 24,
+          "sentence": null
+        },
+        {
+          "id": "14e2750b-6a2f-5c0a-8fef-acea922781dd",
+          "collection": "reports_text",
+          "score": 0.35022026,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 19,
+          "sentence": null
+        },
+        {
+          "id": "7c404cd1-214c-514c-a4d4-238a83575531",
+          "collection": "reports_text",
+          "score": 0.33959913,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 34,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "We may not make adequate and timely investments or successfully implement strategies that will effectively achieve our sustainability-related goals, which could lead to reputational harm with members and other stakeholders.",
+      "report_s3_key": "edgar/COST/2024-10-09_02f59d813c.html",
+      "candidates": [
+        {
+          "id": "7c404cd1-214c-514c-a4d4-238a83575531",
+          "collection": "reports_text",
+          "score": 0.4662788,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 34,
+          "sentence": null
+        },
+        {
+          "id": "2ee593b1-2b15-5d1b-8cfa-6de27378cefc",
+          "collection": "reports_text",
+          "score": 0.42856678,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "14e2750b-6a2f-5c0a-8fef-acea922781dd",
+          "collection": "reports_text",
+          "score": 0.37906095,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 19,
+          "sentence": null
+        },
+        {
+          "id": "cbc79b59-9fce-59dd-a2c4-5bee0a3d6919",
+          "collection": "reports_text",
+          "score": 0.36998954,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 24,
+          "sentence": null
+        },
+        {
+          "id": "8c7a015b-77c0-5825-bdfa-1b9d833862b8",
+          "collection": "reports_text",
+          "score": 0.3319427,
+          "source": "edgar/COST/2024-10-09_02f59d813c.html",
+          "chunk_id": 20,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "Failure to meet our environmental, social or governance (ESG) goals or expectations could result in reputational harm or adversely affect our business.",
+      "report_s3_key": "edgar/COST/2025-10-08_2cf71f4336.html",
+      "candidates": [
+        {
+          "id": "55c37178-4c35-56a0-ba19-c156fb2a0b73",
+          "collection": "reports_text",
+          "score": 0.5785446,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "c2918119-d61c-5931-8e0f-cb032e6dd31d",
+          "collection": "reports_text",
+          "score": 0.47107023,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 32,
+          "sentence": null
+        },
+        {
+          "id": "8bf6eb71-6766-551e-a264-b2bfd381bf84",
+          "collection": "reports_text",
+          "score": 0.4510829,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 24,
+          "sentence": null
+        },
+        {
+          "id": "a7cceb1a-e76c-57e2-9be9-62eac11df899",
+          "collection": "reports_text",
+          "score": 0.4467181,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 30,
+          "sentence": null
+        },
+        {
+          "id": "bcb32710-8965-5fd5-aceb-066add2ece84",
+          "collection": "reports_text",
+          "score": 0.4463082,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 36,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "We may not make adequate and timely investments or successfully implement strategies that will effectively achieve our sustainability-related goals.",
+      "report_s3_key": "edgar/COST/2025-10-08_2cf71f4336.html",
+      "candidates": [
+        {
+          "id": "55c37178-4c35-56a0-ba19-c156fb2a0b73",
+          "collection": "reports_text",
+          "score": 0.5718692,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "c2918119-d61c-5931-8e0f-cb032e6dd31d",
+          "collection": "reports_text",
+          "score": 0.3679832,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 32,
+          "sentence": null
+        },
+        {
+          "id": "3ad7f85c-86e9-5973-af54-f86b5e3e0c56",
+          "collection": "reports_text",
+          "score": 0.3444851,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 20,
+          "sentence": null
+        },
+        {
+          "id": "ba470515-f621-5881-b594-db97ebc49cc9",
+          "collection": "reports_text",
+          "score": 0.3315606,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 17,
+          "sentence": null
+        },
+        {
+          "id": "bcb32710-8965-5fd5-aceb-066add2ece84",
+          "collection": "reports_text",
+          "score": 0.31342626,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 36,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "Our operations require the treatment and disposal of wastewater, stormwater and agricultural and food processing wastes, the use and maintenance of refrigeration systems, noise, odor and dust management, the operation of mechanized processing equipment, and other operations that potentially could affect the environment and public health and safety.",
+      "report_s3_key": "edgar/COST/2025-10-08_2cf71f4336.html",
+      "candidates": [
+        {
+          "id": "55c37178-4c35-56a0-ba19-c156fb2a0b73",
+          "collection": "reports_text",
+          "score": 0.4968604,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "3ad7f85c-86e9-5973-af54-f86b5e3e0c56",
+          "collection": "reports_text",
+          "score": 0.4328494,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 20,
+          "sentence": null
+        },
+        {
+          "id": "a7cceb1a-e76c-57e2-9be9-62eac11df899",
+          "collection": "reports_text",
+          "score": 0.39373562,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 30,
+          "sentence": null
+        },
+        {
+          "id": "40497a32-9022-5b86-8045-2947cd574593",
+          "collection": "reports_text",
+          "score": 0.37188834,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 19,
+          "sentence": null
+        },
+        {
+          "id": "c2918119-d61c-5931-8e0f-cb032e6dd31d",
+          "collection": "reports_text",
+          "score": 0.3487445,
+          "source": "edgar/COST/2025-10-08_2cf71f4336.html",
+          "chunk_id": 32,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a significant amount of litigation expenses.",
+      "report_s3_key": "edgar/GE/2024-02-02_db7709bba2.html",
+      "candidates": [
+        {
+          "id": "9e2498aa-3045-51df-a5c7-960410d1c8c1",
+          "collection": "reports_text",
+          "score": 0.522092,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 209,
+          "sentence": null
+        },
+        {
+          "id": "08ef3aca-9410-5572-93c6-d3a0e83bd5a4",
+          "collection": "reports_kpi",
+          "score": 0.5048703,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:AccountsPayableAndAccruedLiabilitiesDisclosureTextBlock (c-1): NOTE 11. ACCOUNTS PAYABLE AND EQUIPMENT PROJECT PAYABLESDecember 3120232022Trade payables$10,678 $10,033 Supply chain finance programs(a)3,133 3,689 Equipment project payables(b)1,193 1,236 Non-income based tax payables403 441 Accounts payable and equipment project payables$15,408 $15,399 (a) During the fourth quarter of 2023, Renewable Energy, Power and Corporate made prepayments of $473 million, $185 million and $76 million, respectively, related to supply chain finance programs.(b) Primarily related to projects at Power and Renewable Energy.We facilitate voluntary supply chain finance programs with third parties, which provide participating suppliers the opportunity to sell their GE receivables to third parties at the sole discretion of both the suppliers and the third parties. Total supplier invoices paid through these third-party programs were $8,552 million and $6,990 million for the year ended December 31, 2023 and 2022, respectively."
+        },
+        {
+          "id": "2212af2e-95a7-5c3f-aa36-5038b1049930",
+          "collection": "reports_kpi",
+          "score": 0.49982113,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:LiabilityForAsbestosAndEnvironmentalClaimsGross (c-19): usd 2,415"
+        },
+        {
+          "id": "2528cf2c-b3cc-52bc-aed9-ed05b067fbd2",
+          "collection": "reports_text",
+          "score": 0.48900428,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 44,
+          "sentence": null
+        },
+        {
+          "id": "c78f79d2-23bf-5cd1-ba92-32126ec9e362",
+          "collection": "reports_text",
+          "score": 0.48685348,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 220,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a substantial amount of long-term borrowings.",
+      "report_s3_key": "edgar/GE/2024-02-02_db7709bba2.html",
+      "candidates": [
+        {
+          "id": "8de3425d-85ba-5d13-bc09-c0e61ecff1c9",
+          "collection": "reports_text",
+          "score": 0.5235226,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 52,
+          "sentence": null
+        },
+        {
+          "id": "41fe1d21-8f02-50ed-a869-3e8fd26569bf",
+          "collection": "reports_kpi",
+          "score": 0.5174544,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfDebtTableTextBlock (c-1): December 3120232022AmountAverage RateAmountAverage RateCurrent portion of long-term borrowings   Senior notes1,044 2.42 %$3,525 1.30 %   Subordinated notes and other107 6.73 100 6.71 %Other short- term borrowings103 115 Total short-term borrowings$1,253 $3,739 MaturitiesAmountAverage RateAmountAverage RateSenior notes2025-2055$17,509 3.99 %$18,079 3.96 %Subordinated notes2035-20371,383 4.43 1,340 4.72 %Other819 901 Total long-term borrowings$19,711 $20,320 Total borrowings$20,965 $24,059"
+        },
+        {
+          "id": "04b13990-e535-5fa9-8124-530197e2488b",
+          "collection": "reports_kpi",
+          "score": 0.51579595,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:DebtDisclosureTextBlock (c-1): NOTE 10. BORROWINGSDecember 3120232022AmountAverage RateAmountAverage RateCurrent portion of long-term borrowings   Senior notes1,044 2.42 %$3,525 1.30 %   Subordinated notes and other107 6.73 100 6.71 %Other short- term borrowings103 115 Total short-term borrowings$1,253 $3,739 MaturitiesAmountAverage RateAmountAverage RateSenior notes2025-2055$17,509 3.99 %$18,079 3.96 %Subordinated notes2035-20371,383 4.43 1,340 4.72 %Other819 901 Total long-term borrowings$19,711 $20,320 Total borrowings$20,965 $24,059 Long-term debt maturities over the next five years as follows.20242025202620272028ThereafterTotalLong term debt maturities$1,151(a)$1,827$1,334$1,580$478$14,493$20,862(a)Fixed and floating rate notes of $343 million contain put options with exercise dates in 2024, which have final maturity beyond 2035."
+        },
+        {
+          "id": "96ab1eed-70fd-5e20-83cc-f4533951e517",
+          "collection": "reports_text",
+          "score": 0.49686134,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 168,
+          "sentence": null
+        },
+        {
+          "id": "e5d1854e-9d34-5a27-bd4e-bf747be6b0bd",
+          "collection": "reports_kpi",
+          "score": 0.49419022,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:LongTermContractsOrProgramsDisclosureTextBlock (c-1): NOTE 8. CONTRACT AND OTHER DEFERRED ASSETS & PROGRESS COLLECTIONS AND DEFERRED INCOMEContract and other deferred assets decreased $1,337 million in the year ended December 31, 2023 primarily due to a decrease in long-term service agreements, partially offset by the timing of revenue recognition ahead of billing milestones on long-term equipment contracts. Our long-term service agreements decreased primarily due to billings of $13,165 million, partially offset by revenues recognized of $11,312 million and a net favorable change in estimated profitability of $90 million at Power and $74 million at Aerospace.December 31, 2023AerospaceRenewable EnergyPowerCorporateTotalRevenues in excess of billings$2,377 $— $5,205 $— $7,582 Billings in excess of revenues(7,902)— (1,810)— (9,712)Long-term service agreements$(5,525)$— $3,395 $— $(2,130)Equipment and other service agreements494 1,374 1,499 263 3,630 Current contract assets$(5,030)$1,374 $4,894 $263 $1,500 Nonrecurring engineering costs(a)2,444 18 1 — 2,463 Customer advances and other(b)2,342 — 601 — 2,943 Non-current contract and other deferred assets$4,785 $18 $603 $— $5,406 Total contract and other deferred assets$(245)$1,392 $5,497 $263 $6,907"
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a significant amount of accumulated defined benefit plans adjustment.",
+      "report_s3_key": "edgar/GE/2024-02-02_db7709bba2.html",
+      "candidates": [
+        {
+          "id": "c29a7434-9b82-5d9b-9366-73170a2f3958",
+          "collection": "reports_text",
+          "score": 0.5900127,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 78,
+          "sentence": null
+        },
+        {
+          "id": "60c98efd-8241-59f7-91c5-2ddb9537d7c1",
+          "collection": "reports_kpi",
+          "score": 0.5530765,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfAmountsRecognizedInOtherComprehensiveIncomeLossTableTextBlock (c-1): COST OF POSTRETIREMENT BENEFIT PLANS AND CHANGES IN OTHER COMPREHENSIVE INCOMEFor the years ended December 31202320222021(Pre-tax)Principal pension Other pension Principal retiree benefit Principal pension Other pension Principal retiree benefit Principal pension Other pension Principal retiree benefit Cost (income) of postretirement benefit plans$(1,108)$(118)$(144)$575 $(396)$(203)$2,650 $(102)$(168)Changes in other comprehensive loss (income)Prior service cost (credit) - current year49 — — — — — — (1)— Net loss (gain) - current year(a)1,588 721 (5)(1,533)(128)(778)(4,959)(2,104)(488)Reclassifications out of AOCICurtailment/settlement gain (loss)— 6 — — 6 — — (68)— Dispositions/acquisitions/other - net1,989 (792)1,216 — — — — (68)— Amortization of net gain (loss)723 (20)124 (1,422)(101)115 (3,483)(403)79 Amortization of prior service credit (cost)(5)4 148 (5)8 235 (28)3 236 Total changes in other comprehensive loss (income)4,344 (81)1,483 (2,960)(215)(428)(8,470)(2,641)(173)Cost (income) of postretirement benefit plans and changes in other comprehensive loss (income)$3,236 $(199)$1,339 $(2,385)$(611)$(631)$(5,820)$(2,743)$(341)(a) Primarily due to impact of discount rates and investment performance."
+        },
+        {
+          "id": "1325d897-916a-5d71-acdc-fb843730f7b8",
+          "collection": "reports_text",
+          "score": 0.5474115,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 134,
+          "sentence": null
+        },
+        {
+          "id": "8435c26b-dba6-5a66-bbd9-18f69af65be4",
+          "collection": "reports_text",
+          "score": 0.5444727,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": 131,
+          "sentence": null
+        },
+        {
+          "id": "6d061152-6b52-5c6b-bdbb-535e2ced8b6e",
+          "collection": "reports_kpi",
+          "score": 0.5379056,
+          "source": "edgar/GE/2024-02-02_db7709bba2.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:PensionAndOtherPostretirementPlansPolicy (c-1): POSTRETIREMENT BENEFIT PLANS."
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has favorable pre-tax adjustments of $196 million in the year ended December 31, 2024, from updating the net premium ratio.",
+      "report_s3_key": "edgar/GE/2025-02-03_53bc55998f.html",
+      "candidates": [
+        {
+          "id": "0f23aa46-4f4c-5bae-9206-738207e992fc",
+          "collection": "reports_text",
+          "score": 0.62467146,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 41,
+          "sentence": null
+        },
+        {
+          "id": "ed525a92-60b4-505f-8a8f-419511f4812f",
+          "collection": "reports_text",
+          "score": 0.54417706,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 196,
+          "sentence": null
+        },
+        {
+          "id": "90cde25c-064c-5c84-99f3-54b6624406ed",
+          "collection": "reports_kpi",
+          "score": 0.5368333,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:SummaryOfValuationAllowanceTextBlock (c-1): DEFERRED TAX ASSETS VALUATION ALLOWANCEBalance at December 31, 2021$(3,348)Additions charged to income tax expense(10)Reductions credited to income tax expense— Other adjustments(a)(1,806)Balance at December 31, 2022$(5,164)Additions charged to income tax expense— Reductions credited to income tax expense102 Other adjustments(b)1,646 Balance at December 31, 2023$(3,416)Additions charged to income tax expense(2)Reductions credited to income tax expense184 Other adjustments18 Balance at December 31, 2024$(3,216)(a) Primarily related to excess capital losses generated during the year. (b) Primarily related to utilization of losses against capital gains, including gains reported in discontinued operations. See Note 2 for further information."
+        },
+        {
+          "id": "737740e9-1565-5391-8725-bb75ba9e809c",
+          "collection": "reports_kpi",
+          "score": 0.5263855,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfUnrecognizedTaxBenefitsRollForwardTableTextBlock (c-1): UNRECOGNIZED TAX BENEFITS RECONCILIATION202420232022Balance at January 1$3,399 $3,951 $4,224 Additions for tax positions of the current year68 109 62 Additions for tax positions of prior years77 156 120 Reductions for tax positions of prior years(a)(649)(710)(393)Settlements with tax authorities(14)(56)(8)Expiration of the statute of limitations(57)(51)(54)Balance at December 31$2,824 $3,399 $3,951 (a) Included $(612) million due to the spin of GE Vernova for 2024 and $(577) million due to the spin of GE HealthCare for 2023."
+        },
+        {
+          "id": "e02eb345-163d-5c44-a0d5-4030c46845d3",
+          "collection": "reports_text",
+          "score": 0.51622,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 180,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has unfavorable pre-tax adjustments of $(155) million in the year ended December 31, 2023, from updating the net premium ratio.",
+      "report_s3_key": "edgar/GE/2025-02-03_53bc55998f.html",
+      "candidates": [
+        {
+          "id": "0f23aa46-4f4c-5bae-9206-738207e992fc",
+          "collection": "reports_text",
+          "score": 0.6107415,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 41,
+          "sentence": null
+        },
+        {
+          "id": "1f5c5a2b-8c0c-58a0-b2ad-87c28f10764d",
+          "collection": "reports_kpi",
+          "score": 0.5676288,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfCompensationCostForShareBasedPaymentArrangementsAllocationOfShareBasedCompensationCostsByPlanTableTextBlock (c-1): 202420232022Compensation expense (after-tax)(a)$286 $192 $143 Cash received from stock options exercised1,492 565 62 Intrinsic value of stock options exercised and RSU/PSU/Performance shares vested1,754 561 170 (a)Unrecognized compensation cost related to unvested equity awards as of December 31, 2024 was $365 million, which will be amortized over a weighted average period of 1.2 years. Income tax benefit recognized in earnings on stock-based compensation was $152 million, $29 million and  $(3) million in 2024, 2023 and 2022, respectively."
+        },
+        {
+          "id": "90cde25c-064c-5c84-99f3-54b6624406ed",
+          "collection": "reports_kpi",
+          "score": 0.5644278,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:SummaryOfValuationAllowanceTextBlock (c-1): DEFERRED TAX ASSETS VALUATION ALLOWANCEBalance at December 31, 2021$(3,348)Additions charged to income tax expense(10)Reductions credited to income tax expense— Other adjustments(a)(1,806)Balance at December 31, 2022$(5,164)Additions charged to income tax expense— Reductions credited to income tax expense102 Other adjustments(b)1,646 Balance at December 31, 2023$(3,416)Additions charged to income tax expense(2)Reductions credited to income tax expense184 Other adjustments18 Balance at December 31, 2024$(3,216)(a) Primarily related to excess capital losses generated during the year. (b) Primarily related to utilization of losses against capital gains, including gains reported in discontinued operations. See Note 2 for further information."
+        },
+        {
+          "id": "737740e9-1565-5391-8725-bb75ba9e809c",
+          "collection": "reports_kpi",
+          "score": 0.5523414,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfUnrecognizedTaxBenefitsRollForwardTableTextBlock (c-1): UNRECOGNIZED TAX BENEFITS RECONCILIATION202420232022Balance at January 1$3,399 $3,951 $4,224 Additions for tax positions of the current year68 109 62 Additions for tax positions of prior years77 156 120 Reductions for tax positions of prior years(a)(649)(710)(393)Settlements with tax authorities(14)(56)(8)Expiration of the statute of limitations(57)(51)(54)Balance at December 31$2,824 $3,399 $3,951 (a) Included $(612) million due to the spin of GE Vernova for 2024 and $(577) million due to the spin of GE HealthCare for 2023."
+        },
+        {
+          "id": "1e0acd87-2529-5455-bc45-3b53d76dc55e",
+          "collection": "reports_kpi",
+          "score": 0.546091,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:CashProceedsReceivedAndTaxBenefitFromShareBasedPaymentAwardsTableTextBlock (c-1): 202420232022Compensation expense (after-tax)(a)$286 $192 $143 Cash received from stock options exercised1,492 565 62 Intrinsic value of stock options exercised and RSU/PSU/Performance shares vested1,754 561 170 (a)Unrecognized compensation cost related to unvested equity awards as of December 31, 2024 was $365 million, which will be amortized over a weighted average period of 1.2 years. Income tax benefit recognized in earnings on stock-based compensation was $152 million, $29 million and  $(3) million in 2024, 2023 and 2022, respectively."
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has the option to decrease benefits, with approval by state regulators, should actual experience emerge worse than what was projected when such policies were initially underwritten.",
+      "report_s3_key": "edgar/GE/2025-02-03_53bc55998f.html",
+      "candidates": [
+        {
+          "id": "3416401e-2995-5c86-9df3-03ff3e8a73ad",
+          "collection": "reports_text",
+          "score": 0.4815656,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 63,
+          "sentence": null
+        },
+        {
+          "id": "30a7762b-dc29-56fb-8284-c318ddde7aea",
+          "collection": "reports_text",
+          "score": 0.38600993,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 64,
+          "sentence": null
+        },
+        {
+          "id": "9a28ff3d-8889-57f8-ba20-b551b023414a",
+          "collection": "reports_text",
+          "score": 0.37132967,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 183,
+          "sentence": null
+        },
+        {
+          "id": "7e0d604f-f9f4-5504-b44b-e81431b074ce",
+          "collection": "reports_text",
+          "score": 0.35691085,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 137,
+          "sentence": null
+        },
+        {
+          "id": "90561955-cce4-56b9-ab22-efbb5eed7bad",
+          "collection": "reports_text",
+          "score": 0.35612804,
+          "source": "edgar/GE/2025-02-03_53bc55998f.html",
+          "chunk_id": 40,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "Total emissions (absolute Scope 1 and 2) decreased by 25.6% from 2022 to 2023.",
+      "report_s3_key": "site/General_Electric_Company/2025_790d874d99.pdf",
+      "candidates": [
+        {
+          "id": "f4dc5086-cfa8-5913-95e1-6a5d75bf2506",
+          "collection": "reports_kpi",
+          "score": 0.63011414,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: operational emissions by 2030 and"
+        },
+        {
+          "id": "590e6231-d310-5eb2-b444-5b0dcd049ceb",
+          "collection": "reports_kpi",
+          "score": 0.6170331,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: 2050 for Scope 3 carbon emissions from the use of sold"
+        },
+        {
+          "id": "d03ac3b6-ee89-560e-86cb-3a842df2e001",
+          "collection": "reports_kpi",
+          "score": 0.5596,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: carbon emissions by 2050.7"
+        },
+        {
+          "id": "fa7353bc-c364-522f-8300-b4d4d6941a08",
+          "collection": "reports_kpi",
+          "score": 0.53663397,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: journey as a standalone public company, change improvement in safety matters. When it comes to reduced Scope 1 and 2 carbon emissions by 43% from our"
+        },
+        {
+          "id": "15b9630a-3755-51b4-86bf-564f5f1bb377",
+          "collection": "reports_kpi",
+          "score": 0.5193529,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: net zero carbon emissions by 2050. GE Aerospace is Our Aerospace Carbon Solutions business reflects this"
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "Scope 1 emissions—market-based decreased by 4.3% from 2022 to 2023.",
+      "report_s3_key": "site/General_Electric_Company/2025_790d874d99.pdf",
+      "candidates": [
+        {
+          "id": "590e6231-d310-5eb2-b444-5b0dcd049ceb",
+          "collection": "reports_kpi",
+          "score": 0.6992902,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: 2050 for Scope 3 carbon emissions from the use of sold"
+        },
+        {
+          "id": "f4dc5086-cfa8-5913-95e1-6a5d75bf2506",
+          "collection": "reports_kpi",
+          "score": 0.64417696,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: operational emissions by 2030 and"
+        },
+        {
+          "id": "fa7353bc-c364-522f-8300-b4d4d6941a08",
+          "collection": "reports_kpi",
+          "score": 0.6099686,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: journey as a standalone public company, change improvement in safety matters. When it comes to reduced Scope 1 and 2 carbon emissions by 43% from our"
+        },
+        {
+          "id": "d03ac3b6-ee89-560e-86cb-3a842df2e001",
+          "collection": "reports_kpi",
+          "score": 0.570951,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: carbon emissions by 2050.7"
+        },
+        {
+          "id": "15b9630a-3755-51b4-86bf-564f5f1bb377",
+          "collection": "reports_kpi",
+          "score": 0.5487104,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: net zero carbon emissions by 2050. GE Aerospace is Our Aerospace Carbon Solutions business reflects this"
+        }
+      ],
+      "label": "notsupport"
+    },
+    {
+      "claim": "Carbon-free electricity increased by 83.5% from 2022 to 2023.",
+      "report_s3_key": "site/General_Electric_Company/2025_790d874d99.pdf",
+      "candidates": [
+        {
+          "id": "a010e0ae-cd70-5800-a74f-3a3e1f1ee706",
+          "collection": "reports_text",
+          "score": 0.59218866,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": 55,
+          "sentence": null
+        },
+        {
+          "id": "d03ac3b6-ee89-560e-86cb-3a842df2e001",
+          "collection": "reports_kpi",
+          "score": 0.5535375,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: carbon emissions by 2050.7"
+        },
+        {
+          "id": "51f0ce68-2a9e-59a3-8f95-980b0c1fb176",
+          "collection": "reports_kpi",
+          "score": 0.5212499,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: In 2023, we established Aerospace Carbon Solutions, with"
+        },
+        {
+          "id": "590e6231-d310-5eb2-b444-5b0dcd049ceb",
+          "collection": "reports_kpi",
+          "score": 0.49739492,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: 2050 for Scope 3 carbon emissions from the use of sold"
+        },
+        {
+          "id": "daa9cee5-e9ad-5e87-9d65-1cc0b894931c",
+          "collection": "reports_text",
+          "score": 0.47048575,
+          "source": "site/General_Electric_Company/2025_790d874d99.pdf",
+          "chunk_id": 3,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a policy in place to address human rights and ethical supply chain issues.",
+      "report_s3_key": "site/General_Electric_Company/2025_9069df50e6.pdf",
+      "candidates": [
+        {
+          "id": "29f26406-9eeb-56f7-95b2-886526fc93c7",
+          "collection": "reports_text",
+          "score": 0.5855378,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 15,
+          "sentence": null
+        },
+        {
+          "id": "a36473e3-7a37-501c-9496-64f0f48c6217",
+          "collection": "reports_text",
+          "score": 0.5691385,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 11,
+          "sentence": null
+        },
+        {
+          "id": "c34b03ca-331a-52ec-a2ca-1c147a0d2de1",
+          "collection": "reports_text",
+          "score": 0.54269326,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 10,
+          "sentence": null
+        },
+        {
+          "id": "06bce1f8-2c02-5773-a1a4-dfcb98e2b4ce",
+          "collection": "reports_text",
+          "score": 0.41539496,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 20,
+          "sentence": null
+        },
+        {
+          "id": "e8d65570-1288-523b-9eb6-cb3f6c9551be",
+          "collection": "reports_text",
+          "score": 0.4147983,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 21,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a policy to address customer privacy and data protection.",
+      "report_s3_key": "site/General_Electric_Company/2025_9069df50e6.pdf",
+      "candidates": [
+        {
+          "id": "71bef522-d9d6-5236-9c0b-ce3409cf6ba0",
+          "collection": "reports_text",
+          "score": 0.32436243,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 18,
+          "sentence": null
+        },
+        {
+          "id": "a36473e3-7a37-501c-9496-64f0f48c6217",
+          "collection": "reports_text",
+          "score": 0.30289814,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 11,
+          "sentence": null
+        },
+        {
+          "id": "c34b03ca-331a-52ec-a2ca-1c147a0d2de1",
+          "collection": "reports_text",
+          "score": 0.29586762,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 10,
+          "sentence": null
+        },
+        {
+          "id": "902536a2-5acc-5341-80a8-4e4e9d8f32a5",
+          "collection": "reports_kpi",
+          "score": 0.27165508,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: Policy Open Reporting concerns raised number 1,123 1,245"
+        },
+        {
+          "id": "12779401-78f4-5a60-a931-dca21ffbb8f2",
+          "collection": "reports_text",
+          "score": 0.2666201,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 26,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company's greenhouse gas emissions and removals are verified in accordance with the GHG Protocol Corporate Accounting and Reporting Standard.",
+      "report_s3_key": "site/General_Electric_Company/2025_9069df50e6.pdf",
+      "candidates": [
+        {
+          "id": "a3f4b748-9ce2-57f4-99a9-c5c8f6f9d624",
+          "collection": "reports_text",
+          "score": 0.6750349,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 43,
+          "sentence": null
+        },
+        {
+          "id": "d72002a4-cabc-54d8-b1fa-a1fafe3958fa",
+          "collection": "reports_text",
+          "score": 0.65489435,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 39,
+          "sentence": null
+        },
+        {
+          "id": "a4d8cd93-3ebd-51c0-9b7f-e4aced18e12d",
+          "collection": "reports_text",
+          "score": 0.6070957,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 35,
+          "sentence": null
+        },
+        {
+          "id": "d4295ec9-f137-5e25-ba93-cc2c419c7952",
+          "collection": "reports_text",
+          "score": 0.5942315,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 45,
+          "sentence": null
+        },
+        {
+          "id": "d650a3ce-1f59-5efb-bb0d-3af9b0eb436b",
+          "collection": "reports_text",
+          "score": 0.5918354,
+          "source": "site/General_Electric_Company/2025_9069df50e6.pdf",
+          "chunk_id": 41,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company's revenue increased in 2023 compared to 2022.",
+      "report_s3_key": "edgar/XOM/2024-02-28_29d225db9f.html",
+      "candidates": [
+        {
+          "id": "5dc84982-cd86-5dbe-b80e-110521567dc9",
+          "collection": "reports_text",
+          "score": 0.5346514,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 114,
+          "sentence": null
+        },
+        {
+          "id": "ceb27dcf-c1d8-5314-9422-f0893261b876",
+          "collection": "reports_text",
+          "score": 0.5208265,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 113,
+          "sentence": null
+        },
+        {
+          "id": "61d34248-0ff4-563d-af72-214061787635",
+          "collection": "reports_text",
+          "score": 0.49986988,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 63,
+          "sentence": null
+        },
+        {
+          "id": "b7ee1a47-2eca-596d-a4a0-77130246418b",
+          "collection": "reports_kpi",
+          "score": 0.48650992,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfSegmentReportingInformationBySegmentTextBlock (c-1): (millions of dollars)UpstreamEnergy ProductsChemical ProductsSpecialty ProductsCorporate and FinancingCorporate TotalU.S.Non-U.S.U.S.Non-U.S.U.S.Non-U.S.U.S.Non-U.S. As of December 31, 2023        Earnings (loss) after income tax4,202 17,106 6,123 6,019 1,626 11 1,536 1,178 (1,791)36,010 Earnings of equity companies included above63 5,550 140 131 126 761 — (25)(361)6,385 Sales and other operating revenue9,500 16,074 103,868 164,515 7,951 14,314 6,044 12,363 68 334,697 Intersegment revenue20,971 38,982 23,481 28,258 7,991 3,643 2,570 555 244 — Depreciation and depletion expense8,863 7,737 765 797 605 706 93 222 853 20,641 Interest revenue— — — — — — — — 1,628 1,628 Interest expense82 74 4 7 2 2 — 2 676 849 Income tax expense (benefit)1,016 10,593 1,543 1,492 396 158 458 235 (462)15,429 Additions to property, plant and equipment10,372 8,217 1,106 1,455 600 1,775 81 370 5,062 29,038 Investments in equity companies4,436 21,485 406 1,135 3,086 2,700 — 952 (120)34,080 Total assets67,452 138,914 32,123 42,337 17,599 17,076 2,620 8,379 49,817 376,317 As of December 31, 2022Earnings (loss) after income tax11,728 24,751 8,340 6,626 2,328 1,215 1,190 1,225 (1,663)55,740 Earnings of equity companies included above411 10,133 126 322 91 771 — (23)(368)11,463 Sales and other operating revenue14,579 30,585 117,824 188,153 10,670 16,949 6,152 13,727 36 398,675 Intersegment revenue25,658 46,076 29,001 36,894 9,081 5,201 2,587 825 241 — Depreciation and depletion expense5,791 14,013 741 1,246 542 446 95 193 973 24,040 Interest revenue— — — — — — — — 446 446 Interest expense51 38 1 7 — 1 — 1 699 798 Income tax expense (benefit)3,330 11,575 2,615 2,420 520 292 334 252 (1,162)20,176 Additions to property, plant and equipment5,940 6,441 1,141 964 1,026 1,692 37 200 897 18,338 Investments in equity companies4,893 21,502 368 1,154 3,124 2,417 — 1,177 (113)34,522 Total assets66,695 139,764 31,729 41,836 17,342 15,875 2,839 8,316 44,671 369,067 As of December 31, 2021Earnings (loss) after income tax3,663 12,112 668 (1,014)3,697 3,292 1,452 1,807 (2,636)23,040 Earnings of equity companies included above288 5,535 122 100 (139)1,141 — (36)(354)6,657 Sales and other operating revenue8,883 12,914 78,500 130,406 11,995 16,633 4,858 12,473 30 276,692 Intersegment revenue16,692 33,405 16,735 25,097 5,993 4,082 2,193 749 227 — Depreciation and depletion expense6,831 9,918 700 1,036 505 450 97 195 875 20,607 Interest revenue— — — — — — — — 33 33 Interest expense58 36 1 6 — 1 — 1 844 947 Income tax expense (benefit)1,116 4,871 156 (165)1,235 684 464 329 (1,054)7,636 Additions to property, plant and equipment3,308 5,308 979 874 538 712 28 136 658 12,541 Investments in equity companies4,999 18,544 353 972 3,019 2,490 — 1,185 (337)31,225 Total assets67,294 141,978 26,932 37,698 16,695 14,555 2,878 8,030 22,863 338,923 Due to rounding, numbers presented may not add up precisely to the totals indicated."
+        },
+        {
+          "id": "5bd12547-b3f3-5edd-843a-e9a5d86648be",
+          "collection": "reports_text",
+          "score": 0.48459673,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 118,
+          "sentence": null
+        }
+      ],
+      "label": "notsupport"
+    },
+    {
+      "claim": "The company has a significant amount of debt obligations due in 2024.",
+      "report_s3_key": "edgar/XOM/2024-02-28_29d225db9f.html",
+      "candidates": [
+        {
+          "id": "a4762c91-d8d2-5e99-834d-167820bae70e",
+          "collection": "reports_text",
+          "score": 0.65252066,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 116,
+          "sentence": null
+        },
+        {
+          "id": "92e95fb6-b6e3-5ff4-bf4e-fdd5f69a62fc",
+          "collection": "reports_kpi",
+          "score": 0.61452025,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfGuaranteeObligationsTextBlock (c-1): December 31, 2023(millions of dollars)Equity Company Obligations (1)Other Third-Party ObligationsTotal Guarantees   Debt-related1,151 149 1,300 Other711 5,796 6,507 Total1,862 5,945 7,807 (1) ExxonMobil share."
+        },
+        {
+          "id": "0c38c675-a8e1-5596-a599-dbf513a837e2",
+          "collection": "reports_text",
+          "score": 0.5658832,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 177,
+          "sentence": null
+        },
+        {
+          "id": "c45e938e-c999-5a33-a8ad-99109e742a2b",
+          "collection": "reports_kpi",
+          "score": 0.5416093,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:DebtInstrumentInterestRateEffectivePercentage (c-324): number 5.985"
+        },
+        {
+          "id": "4abb4ba9-8502-5159-962b-5852aa40b13a",
+          "collection": "reports_text",
+          "score": 0.54009414,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 182,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company's revenue from energy products decreased in 2022 compared to 2021.",
+      "report_s3_key": "edgar/XOM/2024-02-28_29d225db9f.html",
+      "candidates": [
+        {
+          "id": "71f8f86d-3788-5e83-a1a9-a22f0f19c2e0",
+          "collection": "reports_text",
+          "score": 0.5190258,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 83,
+          "sentence": null
+        },
+        {
+          "id": "a003e131-241c-54b4-b027-e14e3f70b3f4",
+          "collection": "reports_text",
+          "score": 0.48985243,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 109,
+          "sentence": null
+        },
+        {
+          "id": "53c51109-7b9a-56f1-bb73-1be0f60e7a89",
+          "collection": "reports_text",
+          "score": 0.4881001,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 126,
+          "sentence": null
+        },
+        {
+          "id": "2c1e7bbe-63dc-54d7-86d6-8309a2e41b0e",
+          "collection": "reports_text",
+          "score": 0.48713142,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 84,
+          "sentence": null
+        },
+        {
+          "id": "f0b6842d-1374-5593-9dfc-66ef3a2aae76",
+          "collection": "reports_text",
+          "score": 0.48712543,
+          "source": "edgar/XOM/2024-02-28_29d225db9f.html",
+          "chunk_id": 111,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a significant amount of non-US equity securities.",
+      "report_s3_key": "edgar/XOM/2025-02-19_ef8063b86e.html",
+      "candidates": [
+        {
+          "id": "1ea0ec70-fb0a-5e88-ac06-39ecd3fa4646",
+          "collection": "reports_kpi",
+          "score": 0.6160947,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:EquityMethodInvestments (c-498): usd 3,016"
+        },
+        {
+          "id": "97e65a6c-ca6d-56c7-895a-4eb0188c6ef9",
+          "collection": "reports_kpi",
+          "score": 0.6144319,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:EquityMethodInvestments (c-497): usd 915"
+        },
+        {
+          "id": "8e665046-b7c5-5d0a-8cb9-ce052e461f75",
+          "collection": "reports_kpi",
+          "score": 0.6118777,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:EquityMethodInvestments (c-501): usd 814"
+        },
+        {
+          "id": "1c1dc1b4-0ac1-54b7-9575-0b0f9273add4",
+          "collection": "reports_kpi",
+          "score": 0.6112081,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:EquityMethodInvestments (c-499): usd 2,649"
+        },
+        {
+          "id": "03b553f1-d283-5314-841b-1adfe6b881d4",
+          "collection": "reports_kpi",
+          "score": 0.6108906,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:EquityMethodInvestments (c-557): usd —"
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a substantial amount of cash and cash equivalents.",
+      "report_s3_key": "edgar/XOM/2025-02-19_ef8063b86e.html",
+      "candidates": [
+        {
+          "id": "3cc777ad-f842-5714-af09-273cbc7c9f96",
+          "collection": "reports_text",
+          "score": 0.51878226,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 112,
+          "sentence": null
+        },
+        {
+          "id": "e1534485-af3f-5e3e-b3cd-de99447de6cf",
+          "collection": "reports_text",
+          "score": 0.48881206,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 73,
+          "sentence": null
+        },
+        {
+          "id": "d624e5fe-7acf-55b5-a92c-e1be705070ff",
+          "collection": "reports_text",
+          "score": 0.4874429,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 175,
+          "sentence": null
+        },
+        {
+          "id": "48161ef1-f66a-5160-99f5-64f6c38c9648",
+          "collection": "reports_text",
+          "score": 0.48571318,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 115,
+          "sentence": null
+        },
+        {
+          "id": "ec34cbfa-2fb3-5a52-995c-8998d7e20822",
+          "collection": "reports_text",
+          "score": 0.48137188,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 169,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a large amount of debt obligations.",
+      "report_s3_key": "edgar/XOM/2025-02-19_ef8063b86e.html",
+      "candidates": [
+        {
+          "id": "cdd2727a-44ec-5a8b-8e95-34e0e0f91917",
+          "collection": "reports_text",
+          "score": 0.62635946,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 181,
+          "sentence": null
+        },
+        {
+          "id": "f79f565e-8de5-5474-a897-0bf42aa0a2cc",
+          "collection": "reports_text",
+          "score": 0.5996834,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 119,
+          "sentence": null
+        },
+        {
+          "id": "374a6323-6e6a-56a5-baf1-ae4673cfb61c",
+          "collection": "reports_kpi",
+          "score": 0.58749753,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:ScheduleOfGuaranteeObligationsTextBlock (c-1): December 31, 2024(millions of dollars)Equity Company Obligations (1)Other Third-Party ObligationsTotal Guarantees   Debt-related1,073 167 1,240 Other678 5,965 6,643 Total1,751 6,132 7,883 (1) ExxonMobil share."
+        },
+        {
+          "id": "46561030-3f03-5fe3-9831-93186b3a3cde",
+          "collection": "reports_text",
+          "score": 0.5634675,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": 190,
+          "sentence": null
+        },
+        {
+          "id": "8710efb9-1d5b-58bc-a260-1c0ff1330e60",
+          "collection": "reports_kpi",
+          "score": 0.5355039,
+          "source": "edgar/XOM/2025-02-19_ef8063b86e.html",
+          "chunk_id": null,
+          "sentence": "us-gaap:DebtInstrumentInterestRateEffectivePercentage (c-278): number 4.577"
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has reduced its GHG emissions by -8% compared to the 2019 baseline.",
+      "report_s3_key": "site/H&M_Group/2023_7c24b3b981.pdf",
+      "candidates": [
+        {
+          "id": "8755afca-e2b5-5db9-b4ec-48037655404a",
+          "collection": "reports_kpi",
+          "score": 0.546798,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: Climate: % absolute reduction in GHG emissions -56% by 2030 Scope 1 & 2: -8% Scope 1 & 2: -22 Scope 1 & 2: +15"
+        },
+        {
+          "id": "07491dd6-784c-5f7b-af3f-76b65e54a257",
+          "collection": "reports_kpi",
+          "score": 0.52343786,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: greenhouse gas emissions is 2019, in accordance with the Science"
+        },
+        {
+          "id": "4bada3c9-1a63-5892-b4ad-053fb642d683",
+          "collection": "reports_kpi",
+          "score": 0.51621234,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: greenhouse gas (GHG) emissions by 2040 and to reduce"
+        },
+        {
+          "id": "e861ad20-82a6-5305-9b7c-69f9a540461d",
+          "collection": "reports_text",
+          "score": 0.49077946,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 122,
+          "sentence": null
+        },
+        {
+          "id": "7c6294aa-d634-59c3-bb16-5c66d481fe98",
+          "collection": "reports_text",
+          "score": 0.4891328,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 147,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has increased the percentage of renewable electricity in its operations to 95%.",
+      "report_s3_key": "site/H&M_Group/2023_7c24b3b981.pdf",
+      "candidates": [
+        {
+          "id": "94040077-0b7f-5622-af27-2b030fdb94e4",
+          "collection": "reports_kpi",
+          "score": 0.6011964,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: Climate: % renewable electricity in own operations 100% by 2030 92 95 90"
+        },
+        {
+          "id": "25ad8d3d-56e2-5032-9a94-053bd3d50a9c",
+          "collection": "reports_text",
+          "score": 0.4581923,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 118,
+          "sentence": null
+        },
+        {
+          "id": "3241fe72-c7bc-56de-ac60-4062a4d1fbee",
+          "collection": "reports_text",
+          "score": 0.44235745,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 34,
+          "sentence": null
+        },
+        {
+          "id": "dd6ffa60-d3f1-5040-be7a-83fe8e3b2b9b",
+          "collection": "reports_text",
+          "score": 0.42824215,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 10,
+          "sentence": null
+        },
+        {
+          "id": "a199f111-7676-56e5-a8b7-68db577612c5",
+          "collection": "reports_text",
+          "score": 0.40610605,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 12,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company aims to reduce its water use by 30% by 2030.",
+      "report_s3_key": "site/H&M_Group/2023_7c24b3b981.pdf",
+      "candidates": [
+        {
+          "id": "d7f6f591-3de2-53dd-8725-68c26ae91d66",
+          "collection": "reports_kpi",
+          "score": 0.6606879,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: Strategy 2030, which focuses on absolute water use"
+        },
+        {
+          "id": "a199f111-7676-56e5-a8b7-68db577612c5",
+          "collection": "reports_text",
+          "score": 0.5882891,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 12,
+          "sentence": null
+        },
+        {
+          "id": "25250123-56be-5765-bbb9-08643cc18132",
+          "collection": "reports_text",
+          "score": 0.57377326,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 39,
+          "sentence": null
+        },
+        {
+          "id": "852c39af-3802-5b6b-bc05-900e084fc21f",
+          "collection": "reports_kpi",
+          "score": 0.559085,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: New Water Strategy 2030 Community Investment Initiatives"
+        },
+        {
+          "id": "7a37a325-7e17-5d27-9df0-f704413ec6cc",
+          "collection": "reports_text",
+          "score": 0.5348927,
+          "source": "site/H&M_Group/2023_7c24b3b981.pdf",
+          "chunk_id": 125,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a high percentage of employees agreeing with the statement 'I am treated with respect and dignity'.",
+      "report_s3_key": "site/H&M_Group/2024_2cef97226e.pdf",
+      "candidates": [
+        {
+          "id": "fc4dbe6b-6b6a-51ae-a108-d0de56bc6421",
+          "collection": "reports_text",
+          "score": 0.38226435,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 23,
+          "sentence": null
+        },
+        {
+          "id": "e286d11d-29a5-5ad9-a86f-599614ad8102",
+          "collection": "reports_text",
+          "score": 0.37289137,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 138,
+          "sentence": null
+        },
+        {
+          "id": "c6c52d26-8148-5548-97cb-208bbbd31370",
+          "collection": "reports_text",
+          "score": 0.36657172,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 145,
+          "sentence": null
+        },
+        {
+          "id": "f25895b1-e38d-542c-b9d1-273846e9e7fb",
+          "collection": "reports_kpi",
+          "score": 0.36049515,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: Average number of employees 101,103 106,522 107,375"
+        },
+        {
+          "id": "44dd355b-d944-5e3e-95f4-8586ef53f5ab",
+          "collection": "reports_text",
+          "score": 0.3527652,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 102,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a high percentage of female employees in management positions and on the board of directors.",
+      "report_s3_key": "site/H&M_Group/2024_2cef97226e.pdf",
+      "candidates": [
+        {
+          "id": "5b01425a-97e1-5529-9863-2885cd0e9bed",
+          "collection": "reports_text",
+          "score": 0.49520516,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 56,
+          "sentence": null
+        },
+        {
+          "id": "65249944-5b01-5c99-b79c-71154efa2afc",
+          "collection": "reports_text",
+          "score": 0.4913979,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 93,
+          "sentence": null
+        },
+        {
+          "id": "c9fc56f2-a7b1-5e8a-9b54-edcf8626d5f6",
+          "collection": "reports_text",
+          "score": 0.44669718,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 87,
+          "sentence": null
+        },
+        {
+          "id": "c43dd9e3-e613-5d3d-8d97-2cc4dd8e00ad",
+          "collection": "reports_text",
+          "score": 0.4447844,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 91,
+          "sentence": null
+        },
+        {
+          "id": "4df0512a-305c-580c-9f55-f5b501eb731d",
+          "collection": "reports_text",
+          "score": 0.41559345,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 89,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has a high percentage of tier 1 supplier factories with trade union representation.",
+      "report_s3_key": "site/H&M_Group/2024_2cef97226e.pdf",
+      "candidates": [
+        {
+          "id": "ddc9a4c9-c2fd-5e93-a07e-cb512a06a718",
+          "collection": "reports_text",
+          "score": 0.47006392,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 129,
+          "sentence": null
+        },
+        {
+          "id": "05cdfba4-8d65-5dbd-8ed4-728d56e01c9f",
+          "collection": "reports_text",
+          "score": 0.41606376,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 144,
+          "sentence": null
+        },
+        {
+          "id": "fdc9b653-eb33-5a29-bde2-f85eb4d6a870",
+          "collection": "reports_text",
+          "score": 0.4150554,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 122,
+          "sentence": null
+        },
+        {
+          "id": "da60e204-aa18-534c-ae04-ca6b63c54739",
+          "collection": "reports_text",
+          "score": 0.4050039,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 254,
+          "sentence": null
+        },
+        {
+          "id": "67a85e0c-a34a-50f1-8096-5a58b8419d56",
+          "collection": "reports_text",
+          "score": 0.40119725,
+          "source": "site/H&M_Group/2024_2cef97226e.pdf",
+          "chunk_id": 53,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company achieved a 22% reduction in scope 3 emissions from its 2019 baseline.",
+      "report_s3_key": "site/H&M_Group/2024_36c399b03b.pdf",
+      "candidates": [
+        {
+          "id": "4838c41b-a305-5ba8-b483-5f0e592959bc",
+          "collection": "reports_kpi",
+          "score": 0.74262106,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: reduction in our scope 3 emissions from our 2019"
+        },
+        {
+          "id": "d930e2e8-83c4-5fb4-b722-a255836f580d",
+          "collection": "reports_kpi",
+          "score": 0.59537053,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: reduce its GHG emissions in absolute figures by 56% by 2030 (baseline"
+        },
+        {
+          "id": "9e00a3a5-0208-5d0c-bbcd-579d14104ff6",
+          "collection": "reports_text",
+          "score": 0.5840463,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 7,
+          "sentence": null
+        },
+        {
+          "id": "2b8839d0-9db6-55d5-9840-c8d29568826e",
+          "collection": "reports_text",
+          "score": 0.5373879,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 27,
+          "sentence": null
+        },
+        {
+          "id": "c8eee0a9-8709-527d-bab5-78fafce2c1d5",
+          "collection": "reports_text",
+          "score": 0.5273391,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 32,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company increased its share of recycled or sustainably sourced materials to 85%.",
+      "report_s3_key": "site/H&M_Group/2024_36c399b03b.pdf",
+      "candidates": [
+        {
+          "id": "9daff5fc-e22e-575d-91e2-a093dee575b6",
+          "collection": "reports_kpi",
+          "score": 0.6693649,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: 29% Increased our share of recycled or"
+        },
+        {
+          "id": "8e98fd8f-18d1-5807-81ac-81dee1ad1bcb",
+          "collection": "reports_kpi",
+          "score": 0.6266506,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: our stores from our 2016 baseline, including 25% recycled materials. sustainably sourced materials and"
+        },
+        {
+          "id": "252ec779-047c-596b-99c0-489395647a27",
+          "collection": "reports_text",
+          "score": 0.56661004,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 70,
+          "sentence": null
+        },
+        {
+          "id": "64ff839d-73fb-5335-888c-01a29ce2ee73",
+          "collection": "reports_text",
+          "score": 0.5323577,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 71,
+          "sentence": null
+        },
+        {
+          "id": "df54a2d7-0caa-5af1-9c78-abda3919d46f",
+          "collection": "reports_text",
+          "score": 0.53093565,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 3,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company spent SEK 2.1 billion on recycled and sustainably sourced materials and decarbonisation.",
+      "report_s3_key": "site/H&M_Group/2024_36c399b03b.pdf",
+      "candidates": [
+        {
+          "id": "f3e6fc16-6c0d-5879-844c-d1a4c23a5982",
+          "collection": "reports_text",
+          "score": 0.53766656,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 18,
+          "sentence": null
+        },
+        {
+          "id": "a1e88ba1-6755-595b-9876-37440ba93334",
+          "collection": "reports_text",
+          "score": 0.4970886,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 25,
+          "sentence": null
+        },
+        {
+          "id": "de1e2f67-a595-572e-801f-1fae1f9f2a76",
+          "collection": "reports_text",
+          "score": 0.48784804,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 29,
+          "sentence": null
+        },
+        {
+          "id": "64ff839d-73fb-5335-888c-01a29ce2ee73",
+          "collection": "reports_text",
+          "score": 0.48616353,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": 71,
+          "sentence": null
+        },
+        {
+          "id": "8e98fd8f-18d1-5807-81ac-81dee1ad1bcb",
+          "collection": "reports_kpi",
+          "score": 0.48569256,
+          "source": "site/H&M_Group/2024_36c399b03b.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: our stores from our 2016 baseline, including 25% recycled materials. sustainably sourced materials and"
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has improved its audit and validation methods in 2024.",
+      "report_s3_key": "site/H&M_Group/2025_dea67df5ae.pdf",
+      "candidates": [
+        {
+          "id": "2f7360fd-3709-5f31-95ad-443999c1bd95",
+          "collection": "reports_text",
+          "score": 0.49628654,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 62,
+          "sentence": null
+        },
+        {
+          "id": "a905c4d7-8e23-5084-be8a-c2f9ecc4e880",
+          "collection": "reports_text",
+          "score": 0.49592468,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 42,
+          "sentence": null
+        },
+        {
+          "id": "d1e20113-1e9d-557b-a5f8-70449ecf24ca",
+          "collection": "reports_text",
+          "score": 0.44731483,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 325,
+          "sentence": null
+        },
+        {
+          "id": "865c9cc3-2f0f-5eeb-b0c7-6d01d29ff022",
+          "collection": "reports_text",
+          "score": 0.43730402,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 318,
+          "sentence": null
+        },
+        {
+          "id": "96266bf8-581b-51ec-910d-71b5ce10ca58",
+          "collection": "reports_text",
+          "score": 0.433288,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 70,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The number of Letters of Concern (LoC) issued for human rights issues decreased by 63% in 2024 compared to 2023.",
+      "report_s3_key": "site/H&M_Group/2025_dea67df5ae.pdf",
+      "candidates": [
+        {
+          "id": "110e1a75-0ea1-5bab-9f11-580fd45d4bff",
+          "collection": "reports_text",
+          "score": 0.3868226,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 205,
+          "sentence": null
+        },
+        {
+          "id": "ef1e190c-523a-5724-b039-4834483fe04a",
+          "collection": "reports_text",
+          "score": 0.37518072,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 174,
+          "sentence": null
+        },
+        {
+          "id": "0598550b-1f24-5367-8b35-59e1f8d096ad",
+          "collection": "reports_text",
+          "score": 0.3598113,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 74,
+          "sentence": null
+        },
+        {
+          "id": "dfa1393e-8f74-52e7-9148-1587420884fd",
+          "collection": "reports_text",
+          "score": 0.3447411,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 160,
+          "sentence": null
+        },
+        {
+          "id": "75b1cb24-c227-58d1-8f20-f348e373a699",
+          "collection": "reports_text",
+          "score": 0.33971596,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 159,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    },
+    {
+      "claim": "The company has reduced critical violations in the supply chain in 2024.",
+      "report_s3_key": "site/H&M_Group/2025_dea67df5ae.pdf",
+      "candidates": [
+        {
+          "id": "c141aaf4-c950-58ae-a3bb-6d057347f53b",
+          "collection": "reports_kpi",
+          "score": 0.50977606,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: ments to decarbonise our supply chain. In 2024, our"
+        },
+        {
+          "id": "d9b2fa17-5d57-5620-8e2d-085093cb81fb",
+          "collection": "reports_kpi",
+          "score": 0.44705105,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": null,
+          "sentence": "Reported value: 2025 H&M will again been included in CDP’s A list for our work to reduce"
+        },
+        {
+          "id": "110e1a75-0ea1-5bab-9f11-580fd45d4bff",
+          "collection": "reports_text",
+          "score": 0.41365546,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 205,
+          "sentence": null
+        },
+        {
+          "id": "283d7b1d-46a4-5cd2-b212-b48639a5e575",
+          "collection": "reports_text",
+          "score": 0.40955603,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 112,
+          "sentence": null
+        },
+        {
+          "id": "b40e1b16-70d9-5650-9a55-9f7bd239e4f3",
+          "collection": "reports_text",
+          "score": 0.39992768,
+          "source": "site/H&M_Group/2025_dea67df5ae.pdf",
+          "chunk_id": 175,
+          "sentence": null
+        }
+      ],
+      "label": "support"
+    }
+  ]
+}

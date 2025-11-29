@@ -14,6 +14,9 @@ CFG = {
     "aws": {
         "region": os.getenv("AWS_REGION", "eu-central-1"),
         "s3_bucket_raw": os.getenv("S3_BUCKET_RAW"),
+        "prefix_edgar": os.getenv("S3_PREFIX_EDGAR", "edgar/"),
+        "prefix_site": os.getenv("S3_PREFIX_SITE", "site/"),
+        "output_prefix": os.getenv("S3_OUTPUT_PREFIX", "results/"),
     },
     "sec": {
         "user_agent": os.getenv("SEC_USER_AGENT"),
