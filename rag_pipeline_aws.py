@@ -7,11 +7,9 @@ from typing import Dict, Any, List, Optional
 
 import boto3
 import pdfplumber
-from huggingface_hub import InferenceClient  
+from huggingface_hub import InferenceClient
 
 import sys
-# adjust path so we can import config.py from repo root (same pattern as your other scripts)
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from ingestion.config import CFG
 
 # -------------------------
@@ -36,12 +34,12 @@ AWS_REGION = CFG["aws"]["region"]
 S3_BUCKET = CFG["aws"]["s3_bucket_raw"]
 PREFIX_EDGAR = CFG["aws"]["prefix_edgar"].rstrip("/") + "/"
 PREFIX_SITE = CFG["aws"]["prefix_site"].rstrip("/") + "/"
-OUTPUT_PREFIX = CFG["aws"]["output_prefix"].rstrip("/") + "/"  # e.g. "results/"
+OUTPUT_PREFIX = CFG["aws"]["output_prefix"].rstrip("/") + "/"  # "results/"
 
 # Safety: truncate very long docs before sending to LLM
 MAX_TEXT_CHARS = int(os.environ.get("MAX_TEXT_CHARS", "8000"))
 
-# claims per report (spec in the prompt)
+# claims per report (minimum target)
 N_CLAIMS = 6
 
 # -------------------------
@@ -158,7 +156,11 @@ Your task is to propose FACTUAL CLAIMS and classify each claim as either:
   insufficient information to verify the claim.
 
 Requirements:
-- Generate 3 claim (meaning that the output returns a JSON array with 3 elements)
+- Generate AT LEAST 6 claims for each document (ideally between 6 and 10).
+- Across the ENTIRE dataset (all documents combined), the number of "support" and "not support"
+  labels should be as balanced as possible (close to 50/50).
+- For any SINGLE document, you still MUST label each claim correctly based ONLY on the text.
+  Never mislabel a claim just to balance labels.
 - Claims must be concise (1 sentence) and specific enough that they could be checked in the text.
 - For each claim, also output a short evidence snippet (1–3 sentences) copied or very closely
   paraphrased from the disclosure.
@@ -175,53 +177,86 @@ Where:
 - "answer" is exactly "support" or "not support".
 """
 
-def call_llm_generate_claims(client: InferenceClient, doc_text: str) -> List[Dict[str, str]]:
+
+def call_llm_generate_claims(
+    client: InferenceClient,
+    doc_text: str,
+    total_support: int,
+    total_not_support: int,
+) -> List[Dict[str, str]]:
     """
     Call the HF model with the document text and parse its JSON response.
 
-    Returns a list of dicts:
-      [{"claim": ..., "answer": "support|not support", "evidence": ...}, ...]
-    or [] on failure.
+    We pass in global label counts so the model can *aim* for balance across the dataset,
+    while still labeling correctly for each document.
     """
-    user_prompt_1 = (
-        "Here is the disclosure text:\n\n"
-        f"{doc_text}\n\n"
-        "Now generate the JSON object of with ALL claims that has the answer **support**"
-    )
-    user_prompt_2 = (
-        "Here is the disclosure text:\n\n"
-        f"{doc_text}\n\n"
-        "Now generate the JSON object of with ALL claims that has the answer **not supported** do not generate claims for support"
-    )
 
-    resp_1 = client.chat_completion(
+    imbalance = total_support - total_not_support
+
+    if imbalance > 0:
+        # More support than not_support globally
+        balance_hint = (
+            f"There are currently {total_support} 'support' labels and "
+            f"{total_not_support} 'not support' labels in the existing dataset, "
+            f"so 'support' is over-represented by {imbalance} labels.\n"
+            "When you are genuinely uncertain whether a claim is fully supported, "
+            "you may lean slightly towards 'not support'. However, never mislabel: "
+            "if the text clearly supports the claim, still use 'support'."
+        )
+    elif imbalance < 0:
+        # More not_support than support globally
+        balance_hint = (
+            f"There are currently {total_support} 'support' labels and "
+            f"{total_not_support} 'not support' labels in the existing dataset, "
+            f"so 'not support' is over-represented by {-imbalance} labels.\n"
+            "When you are genuinely uncertain, you may lean slightly towards 'support'. "
+            "However, never mislabel: if the text does NOT support the claim, "
+            "or is insufficient, still use 'not support'."
+        )
+    else:
+        balance_hint = (
+            f"The current global label distribution is perfectly balanced: "
+            f"{total_support} 'support' and {total_not_support} 'not support'. "
+            "You do not need to prefer one label over the other; just label correctly."
+        )
+
+    user_prompt = f"""
+We are constructing a GLOBAL dataset of fact-checking claims from many documents.
+
+GLOBAL LABEL COUNTS SO FAR:
+- support: {total_support}
+- not support: {total_not_support}
+
+Guidance:
+{balance_hint}
+
+Now, consider ONLY the following document text:
+
+\"\"\"{doc_text}\"\"\"
+
+
+Generate a JSON array of at least {N_CLAIMS} factual claims for this document, each with:
+- "claim": the statement being made,
+- "answer": "support" or "not support", strictly based on the document,
+- "evidence": a short snippet (1–3 sentences) from the document that justifies your label.
+
+Remember:
+- Always prioritize correctness of each label for this document.
+- Use the global label counts only as a mild tie-breaker when you are truly unsure.
+"""
+
+    resp = client.chat_completion(
         model=HF_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt_1},
+            {"role": "user", "content": user_prompt},
         ],
-        max_tokens=5000,
+        max_tokens=1500,
         temperature=0.3,
     )
 
-    resp_2 = client.chat_completion(
-        model=HF_MODEL,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt_2},
-        ],
-        max_tokens=5000,
-        temperature=0.3,
-    )
+    text = resp.choices[0].message["content"].strip()
 
-    # HF InferenceClient response structure:
-    # resp.choices[0].message["content"]
-    content_1 = resp_1.choices[0].message["content"]
-    content_2 = resp_2.choices[0].message["content"]
-    print(content_1)
-    print(content_2)
-    text_1 = content_1.strip()
-    text_2 = content_2.strip()
     # Try direct JSON parsing first
     def try_parse_json(s: str) -> Optional[List[Dict[str, str]]]:
         try:
@@ -232,24 +267,17 @@ def call_llm_generate_claims(client: InferenceClient, doc_text: str) -> List[Dic
             return None
         return None
 
-    claims = try_parse_json(text_1)
-    #claims += try_parse_json(text_2)
+    claims = try_parse_json(text)
     if claims is None:
         # Attempt to extract the JSON array substring
-        start = text_1.find("[")
-        end = text_1.rfind("]")
+        start = text.find("[")
+        end = text.rfind("]")
         if start != -1 and end != -1 and end > start:
-            snippet = text_1[start : end + 1]
+            snippet = text[start: end + 1]
             claims = try_parse_json(snippet)
-        start = text_2.find("[")
-        end = text_2.rfind("]")
-        if start != -1 and end != -1 and end > start:
-            snippet = text_1[start : end + 1]
-            if claims is not None and try_parse_json(snippet) is not None:
-                claims += try_parse_json(snippet)
 
     if claims is None:
-        logger.warning("Failed to parse LLM output as JSON. Raw output:\n%s", text_1[:500])
+        logger.warning("Failed to parse LLM output as JSON. Raw output:\n%s", text[:500])
         return []
 
     # light cleanup: ensure fields exist and answers are only support/not support
@@ -276,7 +304,16 @@ def call_llm_generate_claims(client: InferenceClient, doc_text: str) -> List[Dic
             }
         )
 
-    # If we didn't get exactly 6, still return what we have (you can enforce stricter later)
+    # ENFORCE MINIMUM: if fewer than N_CLAIMS after cleaning, treat as failure
+    if len(cleaned) < N_CLAIMS:
+        logger.warning(
+            "Only %d cleaned claims (min required %d). Treating as generation failure.",
+            len(cleaned),
+            N_CLAIMS,
+        )
+        return []
+
+    # Otherwise return ALL cleaned claims (can be >= N_CLAIMS)
     return cleaned
 
 
@@ -304,8 +341,8 @@ def main():
     # global label counters
     total_support = 0
     total_not_support = 0
-    num_docs = 5
-    for key in all_keys[:5]:
+
+    for key in all_keys:
         s3_url = f"s3://{S3_BUCKET}/{key}"
         logger.info("Processing %s", s3_url)
 
@@ -319,7 +356,12 @@ def main():
             }
             continue
 
-        claims = call_llm_generate_claims(client, text)
+        claims = call_llm_generate_claims(
+            client=client,
+            doc_text=text,
+            total_support=total_support,
+            total_not_support=total_not_support,
+        )
         if not claims:
             results[s3_url] = {
                 "status": "error",
