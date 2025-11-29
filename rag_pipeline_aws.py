@@ -12,7 +12,7 @@ from huggingface_hub import InferenceClient
 import sys
 # adjust path so we can import config.py from repo root (same pattern as your other scripts)
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from config import CFG
+from ingestion.config import CFG
 
 # -------------------------
 # Logging
@@ -158,8 +158,7 @@ Your task is to propose FACTUAL CLAIMS and classify each claim as either:
   insufficient information to verify the claim.
 
 Requirements:
-- Generate EXACTLY 6 claims.
-- Among these 6, generate 3 with label "support" and 3 with label "not support".
+- Generate 3 claim (meaning that the output returns a JSON array with 3 elements)
 - Claims must be concise (1 sentence) and specific enough that they could be checked in the text.
 - For each claim, also output a short evidence snippet (1–3 sentences) copied or very closely
   paraphrased from the disclosure.
@@ -184,27 +183,45 @@ def call_llm_generate_claims(client: InferenceClient, doc_text: str) -> List[Dic
       [{"claim": ..., "answer": "support|not support", "evidence": ...}, ...]
     or [] on failure.
     """
-    user_prompt = (
+    user_prompt_1 = (
         "Here is the disclosure text:\n\n"
         f"{doc_text}\n\n"
-        "Now generate the JSON array of 6 claims as specified."
+        "Now generate the JSON object of with ALL claims that has the answer **support**"
+    )
+    user_prompt_2 = (
+        "Here is the disclosure text:\n\n"
+        f"{doc_text}\n\n"
+        "Now generate the JSON object of with ALL claims that has the answer **not supported** do not generate claims for support"
     )
 
-    resp = client.chat_completion(
+    resp_1 = client.chat_completion(
         model=HF_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": user_prompt_1},
         ],
-        max_tokens=1500,
+        max_tokens=5000,
+        temperature=0.3,
+    )
+
+    resp_2 = client.chat_completion(
+        model=HF_MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt_2},
+        ],
+        max_tokens=5000,
         temperature=0.3,
     )
 
     # HF InferenceClient response structure:
     # resp.choices[0].message["content"]
-    content = resp.choices[0].message["content"]
-    text = content.strip()
-
+    content_1 = resp_1.choices[0].message["content"]
+    content_2 = resp_2.choices[0].message["content"]
+    print(content_1)
+    print(content_2)
+    text_1 = content_1.strip()
+    text_2 = content_2.strip()
     # Try direct JSON parsing first
     def try_parse_json(s: str) -> Optional[List[Dict[str, str]]]:
         try:
@@ -215,17 +232,24 @@ def call_llm_generate_claims(client: InferenceClient, doc_text: str) -> List[Dic
             return None
         return None
 
-    claims = try_parse_json(text)
+    claims = try_parse_json(text_1)
+    #claims += try_parse_json(text_2)
     if claims is None:
         # Attempt to extract the JSON array substring
-        start = text.find("[")
-        end = text.rfind("]")
+        start = text_1.find("[")
+        end = text_1.rfind("]")
         if start != -1 and end != -1 and end > start:
-            snippet = text[start : end + 1]
+            snippet = text_1[start : end + 1]
             claims = try_parse_json(snippet)
+        start = text_2.find("[")
+        end = text_2.rfind("]")
+        if start != -1 and end != -1 and end > start:
+            snippet = text_1[start : end + 1]
+            if claims is not None and try_parse_json(snippet) is not None:
+                claims += try_parse_json(snippet)
 
     if claims is None:
-        logger.warning("Failed to parse LLM output as JSON. Raw output:\n%s", text[:500])
+        logger.warning("Failed to parse LLM output as JSON. Raw output:\n%s", text_1[:500])
         return []
 
     # light cleanup: ensure fields exist and answers are only support/not support
@@ -280,8 +304,8 @@ def main():
     # global label counters
     total_support = 0
     total_not_support = 0
-
-    for key in all_keys:
+    num_docs = 5
+    for key in all_keys[:5]:
         s3_url = f"s3://{S3_BUCKET}/{key}"
         logger.info("Processing %s", s3_url)
 

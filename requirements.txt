@@ -20,7 +20,7 @@ langchain-text-splitters
 faiss-cpu>=1.8.0
 # faiss-gpu>=1.8.0  # Uncomment if you need GPU support
 
-
+pdfplumber
 pymupdf 
  
 accelerate 
