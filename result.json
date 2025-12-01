@@ -1,0 +1,16 @@
+[
+    {
+        "model": "Qwen/Qwen3-4B-Instruct-2507",
+        "Accuracy":  0.8416,
+        "Precision": 0.9408,
+        "Recall":    0.7833,
+        "F1 Score":  0.8548
+    },
+    {
+        "model": "gpt-5-nano",
+        "Accuracy":  0.9000,
+        "Precision": 0.9810,
+        "Recall":    0.8512,
+        "F1 Score":  0.9115
+    }
+]
