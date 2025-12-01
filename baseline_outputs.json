@@ -1,0 +1,2048 @@
+[
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company's fiscal year 2023 ended on September 30, 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company had marketable securities classified as current assets in 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company reported long-term debt that matures in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company's revenue is divided into Product and Service segments.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company held equity securities measured at fair value using Level 1 inputs.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company had no debt maturing in 2028.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company's fiscal year 2022 ended on December 31, 2022.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/AAPL/2023-11-03_bda1f34435.html",
+    "claim": "The company held cryptocurrency assets in 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple's fiscal year 2024 ended on September 28, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple issued 0.000% notes due in 2025.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple held money market funds classified as Level 1 fair value investments as of September 28, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple's iPhone product category generated more revenue than its Mac category in fiscal year 2024.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple had restricted stock units (RSUs) outstanding during fiscal year 2023.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple held commercial paper classified as Level 2 fair value investments as of September 28, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple's fiscal year 2023 began on September 26, 2022.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/AAPL/2024-11-01_24a830a0f1.html",
+    "claim": "Apple had foreign exchange contracts designated as hedging instruments as of September 28, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "iPhone 3GS packaging is made primarily from bio-based materials.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "The Apple USB power adapter has a no-load power consumption of 0.22W at 100V.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "iPhone 3GS contains mercury in its LCD display.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "Apple offers product take-back and recycling programs in 95 percent of regions where its products are sold.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "The largest contributor to iPhone 3GS greenhouse gas emissions is production.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "iPhone 3GS uses brominated flame retardants in its circuit boards.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "The iPhone 3GS battery chemistry is lithium-ion polymer.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_c1e598bf25.pdf",
+    "claim": "iPhone 3GS packaging contains 136g of paper materials in U.S. configurations.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "iPhone 3G uses arsenic-free glass.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "The Apple USB power adapter has an efficiency of 75% at 115V.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "iPhone 3G packaging contains 90% post-consumer recycled fiberboard.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "iPhone 3G contains mercury in its LCD display.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "Apple offers product take-back and recycling programs in 95% of regions where products are sold.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "The largest contributor to iPhone 3G's greenhouse gas emissions is production.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "iPhone 3G packaging is made primarily from plastic materials.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2009_dda2e0f229.pdf",
+    "claim": "iPhone 3G complies with the European RoHS Directive.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "iPhone 4's production phase accounts for 57% of its total greenhouse gas emissions.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "iPhone 4 packaging contains 90 percent post-consumer recycled fiberboard.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "iPhone 4 uses a lithium-ion polymer battery system.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "The Apple USB power adapter efficiency at 230V is 70%.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "iPhone 4 packaging is heavier than iPhone 3GS packaging.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "Apple offers product take-back and recycling programs in all countries where its products are sold.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "iPhone 4 contains brominated flame retardants in its circuit boards.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2010_3e2cc71f87.pdf",
+    "claim": "The greenhouse gas emissions calculation includes transport from distribution hubs to end customers.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "iPhone 4S production accounts for 60% of its total greenhouse gas emissions.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "The iPhone 4S packaging is made primarily from non-recycled materials.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "iPhone 4S contains mercury in its LED-backlit display.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "Apple offers product take-back and recycling programs in 95 percent of regions where its products are sold.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "The iPhone 4S power adapter efficiency at 230V is 75%.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "iPhone 4S packaging is 14 percent lighter than iPhone 3GS packaging.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "iPhone 4S contains brominated flame retardants in its components.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2012_853c8cdb12.pdf",
+    "claim": "The total greenhouse gas emissions for iPhone 4S over its life cycle are 55 kg CO2e.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple reduced its overall greenhouse gas emissions by more than 60 percent since 2015.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple uses 100% recycled rare earth elements in all magnets across its products.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple's Power for Impact program launched renewable energy projects in the Philippines, Thailand, and South Africa.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple's revenue grew by more than 80 percent since 2015.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "The carbon neutral Mac mini is made with over 50 percent recycled content.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple achieved carbon neutrality for its entire global footprint in 2024.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple uses 71 percent recycled aluminum in its products.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Apple_Inc./2025_597676e8b4.pdf",
+    "claim": "Apple has powered all its facilities with renewable energy since 2020.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The document covers the fiscal year ending December 31, 2024.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The company reported investment banking advisory brokerage and underwriting fees and commissions.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The company had trading securities and trading liabilities in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The company's reporting currency is Japanese Yen.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The document includes information about the company's sustainability initiatives.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The company reported other noninterest expense for the period.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The company had zero revenue from operations in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/C/2025-02-21_6f682f07f0.html",
+    "claim": "The document includes segment information for consumer and commercial portfolios.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The Circular Bioeconomy Alliance was established in 2020 by His Majesty King Charles III.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The CBA Principles for Regenerative Landscapes consist of 10 principles.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The CBA aims to accelerate the transition to a circular bioeconomy that is climate neutral, inclusive and prospers in harmony with nature.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The CBA Principles for Regenerative Landscapes were developed in partnership with Microsoft.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "CBA Living Labs aim at empowering local communities by integrating traditional knowledge and capitalizing on research and innovation.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The CBA anticipates awarding the Terra Carta Seal as a recognition of excellence for land regenerative projects complying with its standard.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "The CBA principles include a principle specifically focused on technological innovation.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2023_ca8cec3f6a.pdf",
+    "claim": "Principle 1 of the CBA Principles for Regenerative Landscapes emphasizes designing for environmental sustainability and reversing nature's degradation.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca committed to early adoption of the Taskforce on Nature-related Financial Disclosures recommendations in 2024.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca aims to plant 200 million trees by 2030 through its AZ Forest program.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca has a target to reduce site water use by 25% by 2025.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "The Sustainability Committee is responsible for reviewing the controls and integrity of sustainability reporting.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca identified Pollution as a material nature-related sustainability topic in its 2024 double materiality assessment.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca's net-zero target date is 2030.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca's Executive Vice President, Global Operations, IT & Chief Sustainability Officer is responsible for the overall sustainability strategy and its execution.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_62d216bdee.pdf",
+    "claim": "AstraZeneca has committed to reducing site waste by 15% by 2025.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "AstraZeneca has implemented microfluidic technology for water testing, reducing horseshoe crab lysate use by over 90%.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "The US Pharmacopeia included synthetic alternatives for BET in USP <86> in November 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "All four surviving species of horseshoe crabs are found in North America.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "In 2022, approximately 911,826 Limulus polyphemus were collected for LAL production in the US.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "AstraZeneca plans to launch all new products with synthetic endotoxin testing alternatives as an option in regulatory submissions.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "The Atlantic States Marine Fisheries Commission has banned biomedical harvesting of female horseshoe crabs through 2025.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "Horseshoe crab blood is used for testing because it has a unique coagulative property that detects endotoxins.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_b094e1e0c4.pdf",
+    "claim": "AstraZeneca has already completed the transition to synthetic alternatives for all its water testing.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca reached more than 90 million people cumulatively through its access to healthcare programmes as of 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca trained 170,000 healthcare workers cumulatively by 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca reduced its Scope 1 and 2 GHG emissions by 77.5% since 2015.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca achieved 100% renewable electricity consumption from its sites globally in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca's total Scope 3 GHG emissions decreased by 3% from the 2019 baseline.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca's battery electric vehicles made up 35% of its total road fleet in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca's total community investment was $126.78 million in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/2025_c5610a9b13.pdf",
+    "claim": "AstraZeneca achieved its target of 95% of suppliers by spend having science-based targets in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca employs 94,000 permanent and part-time employees globally.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca operates manufacturing facilities in 16 countries worldwide.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca had an active presence in more than 80 countries in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca's Australian manufacturing facility produced $300 million worth of respiratory products in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca Norway employs over 200 people.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "Core AstraZeneca has suppliers in over 200 countries.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca Australia has casual employees in its workforce.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca worked with approximately 60,000 third parties from October 2023 to September 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/AstraZeneca_PLC/unknown_f3df23e420.pdf",
+    "claim": "AstraZeneca is a signatory to the United Nations Global Compact.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "This sustainability report is intended to help stakeholders better understand Citi's sustainability initiatives.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "The report contains audited financial statements that have been verified by independent accountants.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "Citi has set a $1 trillion sustainability goal that is referenced in this report.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "The report references standards from the Sustainability Accounting Standards Board (SASB).",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "Citi's sustainability commitments and goals in this report are legally binding guarantees.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "The report discusses Citi's net zero commitment and approach to managing climate risk.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "All data and metrics in this report have been independently verified by third-party auditors.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./2024_2a8920302b.pdf",
+    "claim": "The report includes information about Citi's strategic philanthropy through the Citi Foundation.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi joined the UN Environment Programme Finance Initiative in 1997.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi achieved its goal to source 100% renewable electricity for all facilities by 2020.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi has committed to achieving net-zero emissions by 2040.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi was a founding signatory to the Equator Principles in 2003.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi's Environmental and Social Policy Framework includes specific prohibitions on financing certain activities.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi has endorsed the Principles for Responsible Investment.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi issued its first green bond in 2019 with a value of \u20ac1 billion.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Citigroup_Inc./unknown_5b891d620d.pdf",
+    "claim": "Citi's $1 trillion sustainable finance commitment is targeted for completion by 2025.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche ranks 10th in the 2022 Access to Medicine Index.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche has access plans in place for 90% of its late-stage R&D projects.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche has a formal policy to limit transfers of value to healthcare professionals in countries in scope of the Index.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche has seven on-patent medicines listed on the WHO Model List of Essential Medicines.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche's manufacturing capacity building activities include technology transfers to manufacturers in Nigeria, Ghana, and South Africa.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche acquired GenMark Diagnostics in March 2021 for USD 1.8 billion.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche has 100,920 employees worldwide.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2022_f9d60dccc6.pdf",
+    "claim": "Roche's pharmaceuticals segment generated CHF 45.04 billion in sales in 2021.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Roche's 2024 sustainability reporting aligns with the requirements of the Corporate Sustainability Reporting Directive (CSRD).",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Roche includes all companies where it holds a stake of over 50% in its sustainability performance measures.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Chugai Pharmaceuticals is excluded from all non-financial indicators in Roche's sustainability reporting.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Newly acquired entities are immediately included in Roche's environmental reporting scope.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Roche's patient numbers are reported based on actual patient counts from electronic health records.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Roche follows the ISO 26000 guidance on social responsibility in its sustainability reporting.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "All Roche entities worldwide are required to provide data for economic, social and environmental indicators.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_72d101c14c.pdf",
+    "claim": "Roche's clinical trial patient counts include only interventional studies.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "KPMG AG performed a limited assurance engagement on Roche's selected Sustainability Information for the year 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "The assurance engagement covered all sustainability information from previous years included in the 2024 report.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "KPMG's assurance conclusion states that the Sustainability Information is free from material misstatement.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "The assurance engagement was performed in accordance with International Standard on Assurance Engagements (ISAE) 3000.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "KPMG's work included site visits to 10 selected locations as part of their procedures.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "The Corporate Governance and Sustainability Committee is responsible for preparing the Sustainability Information.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "KPMG was involved in the preparation of Roche's Sustainability Information.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2024_86dfe58be2.pdf",
+    "claim": "The limited assurance engagement provides the same level of assurance as a reasonable assurance engagement.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche Group sales increased by 5% in HY 2022 compared to HY 2021.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche's Diagnostics Division grew by 11% in HY 2022 at constant exchange rates.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche's core earnings per share increased by 21% in HY 2022.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche's operating free cash flow decreased in HY 2022 compared to HY 2021.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Vabysmo was approved by the FDA for retinal vein occlusion (RVO) in 2022.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche's Pharmaceuticals Division sales grew by 3% in HY 2022.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche's core operating profit margin was 39.2% in HY 2022.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/2072_17467e37bb.pdf",
+    "claim": "Roche launched three new molecular entities (NMEs) in 2022.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "Roche subscribes to the Brundtland Report's definition of sustainable development.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The Corporate Sustainability Committee reports directly to the Board of Directors.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC Core Team meets at least twice a year.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC Working Group is chaired by the CEO.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC is responsible for managing and coordinating Roche's sustainable development strategy.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC handles all sustainability-related questionnaires.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC Working Group meets monthly.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Roche_Holding_AG/unknown_1954a8ba1b.pdf",
+    "claim": "The CSC is mandated to monitor compliance with Roche's social, ethical and environmental policies.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota expects suppliers to provide products at the lowest possible cost.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota requires suppliers to establish confidential compliance hotlines.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota's supplier guidelines include expectations for suppliers to engage in political donations.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota expects suppliers to use Genchi-Genbutsu principles in their operations.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota's supplier sustainability guidelines were published in December 2021.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota expects suppliers to develop new technologies for environmental protection, safety, and comfort.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota requires suppliers to maintain off-the-book transactions for certain business activities.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_0b93802195.pdf",
+    "claim": "Toyota expects suppliers to align with Toyota's Human Rights Policy.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Toyota Motor Corporation's Anti-Bribery Guidelines were compiled to reflect global standards of anti-bribery regulations, including those under U.S. and U.K. laws.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Toyota's Anti-Bribery Guidelines explicitly permit facilitation payments to public officials.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Business partners may face legal liability for bribery even if Toyota does not actually obtain any advantage from the act.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "The definition of a Public Official, etc. includes officers and employees of political parties.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Toyota's Anti-Bribery Guidelines allow business partners to use third parties for bribery if properly documented.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Obtaining confidential information is considered an example of obtaining an advantage in the conduct of business under these Guidelines.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "These Anti-Bribery Guidelines apply only to Toyota Motor Corporation's employees, not to business partners.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_4dc348ebd3.pdf",
+    "claim": "Sexual favors are explicitly listed as examples of 'Money, etc.' that constitute bribery under these Guidelines.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's Human Rights Policy was approved by the Board of Directors on September 29, 2021.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's policy applies to all executives and employees in Toyota and its subsidiaries.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota has established a Human Rights Due Diligence system to identify, prevent, and mitigate negative human rights impacts.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's policy explicitly prohibits discrimination based on sexual orientation and gender identity.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's human rights policy requires the company to use only international human rights standards when they conflict with national laws.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota has already implemented remediation mechanisms for human rights violations in all countries where it operates.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's policy states that the company will immediately implement corrective measures when it has caused adverse human rights impacts.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_863c677461.pdf",
+    "claim": "Toyota's human rights policy specifically addresses risks related to migrant workers and forced labor in its supply chain.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota's founding philosophy included paying taxes as a locally rooted company to create employment and enrich the local economy.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota complies with the OECD Transfer Pricing Guidelines in all jurisdictions where it operates.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota's Chief Operating Officer is responsible for tax compliance.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota regularly reports highly important tax issues to its board of directors and Audit and Supervisory Board Members.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota uses tax avoidance structures as part of its normal business operations.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota aims to utilize tax incentives to optimize tax expense and improve shareholder value.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota always resolves tax disputes with authorities without needing to proceed to legal procedures.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Toyota_Motor_Corporation/unknown_a3f4faf973.pdf",
+    "claim": "Toyota adheres to the arm's length principles as defined by the OECD to prevent double taxation.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The document covers the fiscal year 2023.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company has multiple share classes including Common Class A, Common Class B, and Capital Class C.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "Google Services segment includes Google Search, YouTube Advertising, and Google Network.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company's revenue is reported in US dollars.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company's fiscal year ends on December 31.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The document contains information about server and network equipment.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company's revenue from the United States is reported separately from other Americas regions.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The document provides specific revenue figures for 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company operates exclusively in the technology sector.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2024-01-31_787dd59d77.html",
+    "claim": "The company's total assets decreased in 2023 compared to 2022.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The document covers the fiscal year ending December 31, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The company has three classes of stock: Class A, Class B, and Class C.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "Google Services segment includes revenue from YouTube advertising.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The company's property, plant and equipment includes data centers and office buildings.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The company operates in the Asia Pacific region.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The document provides specific revenue figures for each business segment.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The company's fiscal year ends on June 30.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/GOOGL/2025-02-05_a70a2cc584.html",
+    "claim": "The company operates exclusively in the United States.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google reduced its data center energy emissions by 12% in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google signed contracts for 8 GW of clean energy generation in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google's data centers deliver over six times more computing power per unit of electricity than they did five years ago.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google achieved 80% carbon-free energy in all of its data center grid regions in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google's seventh-generation TPU Ironwood is 50 times more power efficient than their first Cloud TPU from 2018.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google has maintained 100% renewable energy match globally every year since 2015.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "Google partnered with Kairos Power to develop small modular nuclear reactors.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_00bf26d9a1.pdf",
+    "claim": "All of Google's key suppliers had signed the Clean Energy Addendum by the end of 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google's Supplier Responsibility program was first launched in 2012.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google works with suppliers in over 100 countries worldwide.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google's Supplier Code of Conduct includes requirements for labor and human rights, health and safety, environmental responsibility, ethics, compliance, and management systems.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google published its first Supplier Responsibility report in 2015.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google's site assessment program prioritizes hardware, logistics, and extended workforce suppliers.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google's consumer hardware devices include Pixel, Nest, and Fitbit.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "Google's 2024 Supplier Responsibility report covers the period from April 2024 to March 2025.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Alphabet_Inc./2025_039e6b40d8.pdf",
+    "claim": "In 2024, Google increased the scope of its Supplier Responsibility program to provide more coverage for Alphabet's suppliers.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company's fiscal year 2023 ended on December 31, 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company had common stock outstanding during 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company acquired Seagen in 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company's reporting currency is US dollars.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company had no long-term debt as of December 31, 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company reported zero revenue from product sales in 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company's fiscal year 2022 began on January 1, 2021.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/PFE/2024-02-22_6d4ccadf0c.html",
+    "claim": "The company had treasury stock on its balance sheet as of December 31, 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "The document covers the fiscal year ending December 31, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "Pfizer had notes due in 2027 with a 1.000% interest rate.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "The company acquired Seagen in 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "Pfizer's revenue from its top eleven products represented more than 50% of total revenue in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "The company had significant research and development costs related to the Seagen acquisition.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "Pfizer's accounts payable decreased from 2023 to 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "The company reported financial information in multiple currencies including USD, EUR, and GBP.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/PFE/2025-02-27_ecf7be6bf6.html",
+    "claim": "Pfizer had a product concentration risk with its top products in 2022, 2023, and 2024.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer's 2021 ESG report covers the period from January 1, 2021, to December 31, 2021.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer reached an estimated 1.4 billion patients with its medicines and vaccines in 2021.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer delivered the first billion doses of the Pfizer-BioNTech COVID-19 vaccine to low- and middle-income countries by the end of 2021.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer's ESG strategy includes seven priority areas.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer has approximately 79,000 employees.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer linked performance on ESG goals to executive compensation in 2021.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer licensed its intellectual property for the COVID-19 vaccine to the Medicines Patent Pool.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2021_b91d1a7279.pdf",
+    "claim": "Pfizer treated an estimated 424 million patients globally with its non-COVID-19 products in 2021.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer invested approximately $11.4 billion in internal research and development programs in 2022.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer's medicines and vaccines reached more than 1.3 billion patients in 2022.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer's Accord for a Healthier World initially included 23 patented medicines and vaccines.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer's ESG priorities include diversity, equity, and inclusion.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer donated all profits from its Russian subsidiary to Ukrainian humanitarian efforts starting March 14, 2022.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer's 2022 ESG Report covers data from January 1, 2021 to December 31, 2021.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer's core values include Integrity as one of the four main values.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2022_7fd7ae0980.pdf",
+    "claim": "Pfizer provides all its medicines and vaccines free of charge to lower-income countries through the Accord for a Healthier World.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "The Pfizer Compliance Helpline is operated by NAVEX Global UK Limited.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "The data controller of the Helpline is Pfizer, Inc. located in New York, NY.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "NAVEX records all telephone calls made to the Helpline.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "The Helpline can be used to report concerns about violations of EU law.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "Pfizer uses automated processing and profiling for Helpline data.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "The Helpline is mandatory for all Pfizer employees to use when reporting concerns.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "NAVEX representatives can provide advice on ethics and policy matters.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2023_c0eeffab9d.pdf",
+    "claim": "Pfizer may process sensitive data such as health information through the Helpline.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer had 3 women on its Board of Directors as of April 24, 2025.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer's Scope 1 and 2 carbon emissions decreased from 1.27 million metric tons CO2e in 2019 to 1.08 million metric tons CO2e in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer achieved 100% renewable electricity usage in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer's water withdrawal increased from 2022 to 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer's success rate for drugs from first-in-human to approval was 21% in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer's business travel carbon emissions in 2024 were below the 2019 baseline.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer had 115 drugs in research and development in 2023.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./2024_d7fd9f96d0.pdf",
+    "claim": "Pfizer's time to market for drugs decreased from 2022 to 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer provides free product samples to healthcare professionals for distribution to patients where permitted by law.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer allows its employees to control the content development of Independent Medical Grant requests.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer provides financial support for HCP spouses to attend conferences regardless of their qualifications.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer discloses results of its sponsored interventional clinical trials in publicly available databases.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer's educational grants can be used to reward recipients for past support of Pfizer products.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer requires that all personal data in its care be protected in compliance with applicable data privacy laws.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer-hosted meetings may include sponsored entertainment events like sporting activities.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/Pfizer_Inc./unknown_1709d2b5a4.pdf",
+    "claim": "Pfizer provides research grants to support scientifically compelling investigations approved by its Medical or R&D groups.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company's fiscal year ended on September 30, 2023.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company has three classes of common stock: Class A, Class B, and Class C.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company acquired Tink AB in March 2022.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company's revenue is derived entirely from the United States.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company reported zero liabilities for the fiscal year 2023.",
+    "label": "notsupport",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company operates in multiple geographic segments including both US and non-US markets.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company's fiscal year 2023 began on October 1, 2022.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2023-11-15_cdc47d2335.html",
+    "claim": "The company reported negative retained earnings for fiscal year 2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company's fiscal year ended on September 30, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company had multiple classes of common stock including Class A, Class B1, Class B2, and Class C.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company reported revenues from international transactions during fiscal year 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company's Series A Preferred Stock was outstanding as of September 30, 2024.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company's fiscal year 2024 began on October 1, 2023.",
+    "label": "support",
+    "prediction": "invalid"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company reported client incentives as a separate revenue component in fiscal year 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company's total assets exceeded $100 billion as of September 30, 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company reported net income growth of 15% for fiscal year 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company operates exclusively in the United States.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "edgar/V/2024-11-13_035f1341ef.html",
+    "claim": "The company had no long-term debt outstanding as of September 30, 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH was ranked no. 1 among business school students in France for the 20th consecutive year.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH is the No. 1 private-sector recruiter in France.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH received a diversity and inclusion score of 94.5 out of 100.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH was assessed as being at high risk in its sector.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH is a member of the Euronext Biodiversity Index.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH received an ESG rating of C+ from a major rating agency.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH achieved a perfect score of 100/100 in environmental performance.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_1e159d13ad.pdf",
+    "claim": "LVMH ranked first among all companies in its sector for environmental performance.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH launched its first-ever employee share ownership plan in 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH's Inclusion Index Awards 2024 recognized initiatives from Maisons and employees in over 20 countries.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "The LVMH Institut des M\u00e9tiers d\u2019Excellence celebrated its 10th anniversary and is now active in eight countries including China.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH reduced its Scope 3 emissions by 15% in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH assisted 1.9 million people worldwide through partnerships with nonprofits and foundations in 2024.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "The first LIFE Academy campus opened in La Milli\u00e8re on October 1, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH was the leading private-sector donor to the restoration program of Notre-Dame de Paris cathedral.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_2e399eafeb.pdf",
+    "claim": "LVMH's website achieved a 95% accessibility rate in 2024.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH Group was formed in 1987 through a merger between Louis Vuitton and Mo\u00ebt Hennessy.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH's cash flow grew 29% year on year to over \u20ac10 billion in 2024.",
+    "label": "support",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH comprises 75 Maisons as of 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH achieved revenue in 2024 that was lower than in 2021-2023.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH's partnership with Formula 1 involved all of its 75 Maisons.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "The Landmark is Tiffany's Fifth Avenue store in Manhattan and is now the Group's leading luxury goods store worldwide.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "LVMH's 2024 performance was achieved in a favorable geopolitical environment.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_6217c39d88.pdf",
+    "claim": "Bernard Arnault is the Chairman and Chief Executive Officer of LVMH.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document is a free translation provided for convenience purposes only.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document outlines the membership of the Sustainability & Governance Committee.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document describes the role of the Sustainability & Governance Committee.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document specifies the compensation of Committee members.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document provides detailed operating procedures for the Committee.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document includes specific meeting frequency requirements for the Committee.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document was adopted on April 18, 2024.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2024_c9048a9977.pdf",
+    "claim": "The document contains provisions for committee member qualifications.",
+    "label": "notsupport",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "LVMH has 75 Maisons across 6 business sectors.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "After the 2025 AGM, the Board of Directors will be composed of 50% women.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "LVMH conducted 4,066 audits at 3,690 suppliers and subcontractors.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "88% of the audits covered environmental aspects only.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "Bernard Arnault owns 49% of LVMH shares.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "LVMH has a program called LIFE 360 with four pillars: Creative Circularity, Climate, Biodiversity, and Traceability & Transparency.",
+    "label": "support",
+    "prediction": "support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "50% of audit non-conformities were related to employee training issues.",
+    "label": "notsupport",
+    "prediction": "not support"
+  },
+  {
+    "s3_key": "site/LVMH_Mo\u00ebt_Hennessy_Louis_Vuitton/2025_9ec9b84090.pdf",
+    "claim": "LVMH's governance establishes demanding standards while promoting the uniqueness of its Maisons.",
+    "label": "support",
+    "prediction": "support"
+  }
+]
