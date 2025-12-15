@@ -18,4 +18,4 @@ module load gcc/13.3.0
 module load python/3.11.9
 module load cuda/12.4.0
 
-/project2/swabhas_1765/ray-alex/green-verifier/venv/bin/python stage2_training.py
+/project2/swabhas_1765/ray-alex/green-verifier/venv/bin/python model/stage2_training.py
