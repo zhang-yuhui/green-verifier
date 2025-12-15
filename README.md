@@ -25,4 +25,7 @@ sbatch run_stage0.slurm
 sbatch run_stage1.slurm
 sbatch run_stage2_inference.slurm
 sbatch run_stage2_training.slurm
+sbatch run_stage2_evaluate.slurm
+
+
 
