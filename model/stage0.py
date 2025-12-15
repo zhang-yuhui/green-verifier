@@ -1,17 +1,16 @@
-# stage0_preprocess.py  (deterministic IDs, structured PDF/HTML, optional OCR)
-
 import io
 import uuid
 import boto3
 import logging
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 import os
+os.environ["TRANSFORMERS_NO_TORCHVISION"] = "1"
 import sys
 import hashlib
 import re
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from config import CFG
+from ingestion.config import CFG
 
 import pdfplumber
 from sentence_transformers import SentenceTransformer
@@ -29,28 +28,34 @@ S3_BUCKET = CFG["aws"]["s3_bucket_raw"]
 PREFIX_EDGAR = CFG["aws"]["prefix_edgar"]
 PREFIX_SITE = CFG["aws"]["prefix_site"]
 
-QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
-QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
+# Qdrant Cloud connection
+QDRANT_URL = os.getenv(
+    "QDRANT_URL",
+    "https://73f8efd6-dd77-481b-8549-7b40e8a6ea7c.europe-west3-0.gcp.cloud.qdrant.io",
+)
+QDRANT_API_KEY = os.getenv(
+    "QDRANT_API_KEY",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.qweUU1RlgvYA4RLxS7Lkv5GBtzlNz0bDIVzOtVcaH-M",
+)
 
 TEXT_COL = "reports_text"
 KPI_COL = "reports_kpi"
 
+#Upgraded embed model 
 EMBED_MODEL_NAME = os.getenv(
-    "EMBED_MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2"
+    "EMBED_MODEL_NAME", "intfloat/e5-base-v2"
 )
 
 # batching params
 TEXT_BATCH_SIZE = 500
 KPI_BATCH_SIZE = 500
-MAX_KPI_SENTENCES_PER_REPORT = 5000  # safety cap
+MAX_KPI_SENTENCES_PER_REPORT = 5000  
 
 # OCR / Textract
 ENABLE_TEXTRACT_OCR = os.getenv("ENABLE_TEXTRACT_OCR", "0") == "1"
-# if avg chars/page is below this, assume image-heavy & run OCR (when enabled)
 TEXTRACT_MIN_CHARS_PER_PAGE = int(os.getenv("TEXTRACT_MIN_CHARS_PER_PAGE", "500"))
-# Textract's synchronous AnalyzeDocument has a 5MB doc size limit
+#Textract's synchronous AnalyzeDocument
 TEXTRACT_MAX_BYTES = 5 * 1024 * 1024
-
 
 # -----------------------
 # HELPERS
@@ -102,8 +107,8 @@ def chunk_tokens(tokens: List[str], chunk_size=400, overlap=100) -> List[str]:
 # -----------------------
 
 NUMERIC_LINE_RE = re.compile(
-    r".*(\d{4}|\d+(\.\d+)?%|\d{1,3}(,\d{3})+).*"
-)  # years, %, thousands
+    r".*(\d{4}|\d+(\.\d+)?%|\d{1,3}(,\d{3})+).*"  #years,%, thousands
+)
 
 
 def extract_numeric_sentences_from_text(text: str, max_sentences: int = 80) -> List[str]:
@@ -128,9 +133,7 @@ def extract_numeric_sentences_from_text(text: str, max_sentences: int = 80) -> L
 # STRUCTURED PDF HANDLING
 # -----------------------
 
-def _pdf_tables_to_sentences(
-    pdf: pdfplumber.PDF,
-) -> List[str]:
+def _pdf_tables_to_sentences(pdf: pdfplumber.PDF) -> List[str]:
     """
     Convert pdfplumber tables into simple 'row/column/value' KPI sentences.
     """
@@ -317,57 +320,220 @@ def html_to_structured_text(html: str) -> Tuple[str, List[str]]:
 
 
 # -----------------------
-# KPI SENTENCE BUILDER
+# iXBRL FACT PARSING
 # -----------------------
 
-def build_kpi_sentences(raw_meta: Dict[str, Any]) -> List[str]:
-    """
-    Combines several sources into KPI-like sentences:
-      1) iXBRL tags (if present in HTML)
-      2) table-based sentences (PDF + HTML)
-      3) numeric-rich lines from full text
-    """
-    sentences: List[str] = []
+def _endswith(tag, name: str) -> bool:
+    """Helper to handle namespaces: tag.name might be 'xbrli:context' or 'context'."""
+    try:
+        tname = tag.name or ""
+    except Exception:
+        return False
+    return tname.lower().endswith(name.lower())
 
-    html_str = raw_meta.get("html")
-    text = raw_meta.get("text", "") or ""
-    table_sents = raw_meta.get("table_sents") or []
 
-    # 1) iXBRL facts from HTML (EDGAR-like filings)
+def parse_ixbrl_facts(html_str: str, s3_key: str) -> List[Dict[str, Any]]:
+    """
+    Parse iXBRL facts and return structured facts with metadata.
+    """
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(html_str, "lxml")
+
+    # ---- Parse contexts ----
+    context_map: Dict[str, Dict[str, Any]] = {}
+    for ctx in soup.find_all(lambda t: _endswith(t, "context")):
+        ctx_id = ctx.get("id")
+        if not ctx_id:
+            continue
+        period = ctx.find(lambda t: _endswith(t, "period"))
+        start_date = None
+        end_date = None
+        if period:
+            sd = period.find(lambda t: _endswith(t, "startdate"))
+            ed = period.find(lambda t: _endswith(t, "enddate"))
+            inst = period.find(lambda t: _endswith(t, "instant"))
+
+            if sd and sd.text.strip():
+                start_date = sd.text.strip()
+            if ed and ed.text.strip():
+                end_date = ed.text.strip()
+            if inst and inst.text.strip():
+                #instant context: treat as both start and end
+                start_date = inst.text.strip()
+                end_date = inst.text.strip()
+
+        # segments/members
+        members: List[str] = []
+        dimensions: List[str] = []
+        segment = ctx.find(lambda t: _endswith(t, "segment"))
+        if segment:
+            for mem in segment.find_all(lambda t: _endswith(t, "explicitmember")):
+                dim = mem.get("dimension") or ""
+                val = mem.text.strip()
+                if val:
+                    members.append(val)
+                    if dim:
+                        dimensions.append(f"{dim}={val}")
+                    else:
+                        dimensions.append(val)
+
+        context_map[ctx_id] = {
+            "period_start": start_date,
+            "period_end": end_date,
+            "members": members,
+            "dimensions": dimensions,
+        }
+
+    # ---- Parse units ----
+    unit_map: Dict[str, Dict[str, Any]] = {}
+    for unit in soup.find_all(lambda t: _endswith(t, "unit")):
+        uid = unit.get("id")
+        if not uid:
+            continue
+        measure = unit.find(lambda t: _endswith(t, "measure"))
+        if measure and measure.text.strip():
+            mtext = measure.text.strip()  #e.g."iso4217:USD"
+        else:
+            mtext = None
+        unit_map[uid] = {"measure": mtext}
+
+    # ---- Parse ix:nonfraction / ix:nonnumeric ----
+    facts: List[Dict[str, Any]] = []
+    ix_tags = soup.find_all(["ix:nonfraction", "ix:nonnumeric"])
+
+    for tag in ix_tags:
+        concept = tag.get("name") or tag.get("concept") or "Reported fact"
+        value = (tag.text or "").strip()
+        if not value:
+            continue
+
+        ctx_id = tag.get("contextref")
+        unit_id = tag.get("unitref")
+        ctx_info = context_map.get(ctx_id, {})
+        unit_info = unit_map.get(unit_id, {})
+
+        period_start = ctx_info.get("period_start")
+        period_end = ctx_info.get("period_end")
+        members = ctx_info.get("members", [])
+        dimensions = ctx_info.get("dimensions", [])
+
+        measure = unit_info.get("measure")
+        
+        unit_str = None
+        if measure:
+            if ":" in measure:
+                unit_str = measure.split(":", 1)[1]
+            else:
+                unit_str = measure
+
+        # build a canonical sentence
+        period_str = None
+        if period_start and period_end:
+            if period_start == period_end:
+                period_str = f"as of {period_end}"
+            else:
+                period_str = f"for the period from {period_start} to {period_end}"
+
+        member_str = ""
+        if members:
+            member_str = " for " + ", ".join(members)
+
+        # basic canonical sentence
+        if period_str and unit_str:
+            sentence = f"{concept}{member_str} {period_str} has value {value} {unit_str}."
+        elif period_str:
+            sentence = f"{concept}{member_str} {period_str} has value {value}."
+        elif unit_str:
+            sentence = f"{concept}{member_str} has value {value} {unit_str}."
+        else:
+            sentence = f"{concept}{member_str} has value {value}."
+
+        facts.append(
+            {
+                "sentence": sentence,
+                "concept": concept,
+                "context_id": ctx_id,
+                "unit_id": unit_id,
+                "unit": unit_str,
+                "period_start": period_start,
+                "period_end": period_end,
+                "members": members,
+                "dimensions": dimensions,
+                "source": "ixbrl",
+                "s3_key": s3_key,
+            }
+        )
+
+    return facts
+
+
+# -----------------------
+# KPI FACT BUILDER
+# -----------------------
+
+def build_kpi_facts(raw_meta: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Build KPI facts with sentences + metadata from iXBRL, tables and numeric lines.
+    """
+    sentences: List[Dict[str, Any]] = []
+
+    html_str: Optional[str] = raw_meta.get("html")
+    text: str = raw_meta.get("text", "") or ""
+    table_sents: List[str] = raw_meta.get("table_sents") or []
+    s3_key: str = raw_meta.get("s3_key", "")
+
+    #iXBRL facts (EDGAR HTML)
     if html_str:
         try:
-            from bs4 import BeautifulSoup
-
-            soup = BeautifulSoup(html_str, "lxml")
-            ix_tags = soup.find_all(["ix:nonfraction", "ix:nonnumeric"])
-            for tag in ix_tags:
-                metric = tag.get("name") or tag.get("concept") or "Reported fact"
-                value = (tag.text or "").strip()
-                unit = tag.get("unitref") or ""
-                ctx = tag.get("contextref") or ""
-                if value:
-                    if unit and ctx:
-                        sent = f"{metric} ({ctx}): {unit} {value}"
-                    elif ctx:
-                        sent = f"{metric} ({ctx}): {value}"
-                    else:
-                        sent = f"{metric}: {value}"
-                    sentences.append(sent)
+            ix_facts = parse_ixbrl_facts(html_str, s3_key)
+            for f in ix_facts:
+                f["fact_kind"] = "ixbrl"
+                sentences.append(f)
         except Exception as e:
-            logger.warning(f"iXBRL parse failed for {raw_meta.get('s3_key')}: {e}")
+            logger.warning(f"iXBRL parse failed for {s3_key}: {e}")
 
-    # 2) structured table values (PDF + HTML + OCR)
+    #structured table values (PDF/HTML/OCR)
     for ts in table_sents:
-        sentences.append(f"Reported table value: {ts}")
+        sentences.append(
+            {
+                "sentence": f"Reported table value: {ts}",
+                "concept": None,
+                "context_id": None,
+                "unit_id": None,
+                "unit": None,
+                "period_start": None,
+                "period_end": None,
+                "members": [],
+                "dimensions": [],
+                "fact_kind": "table",
+                "s3_key": s3_key,
+            }
+        )
 
-    # 3) generic numeric lines from full text
+    # generic numeric lines from full text
     numeric_sents = extract_numeric_sentences_from_text(text)
-    sentences.extend(numeric_sents)
+    for ns in numeric_sents:
+        sentences.append(
+            {
+                "sentence": ns,
+                "concept": None,
+                "context_id": None,
+                "unit_id": None,
+                "unit": None,
+                "period_start": None,
+                "period_end": None,
+                "members": [],
+                "dimensions": [],
+                "fact_kind": "numeric",
+                "s3_key": s3_key,
+            }
+        )
 
     # safety cap
     if len(sentences) > MAX_KPI_SENTENCES_PER_REPORT:
         logger.info(
-            f"KPI sentences for {raw_meta.get('s3_key')} capped "
+            f"KPI facts for {s3_key} capped "
             f"from {len(sentences)} to {MAX_KPI_SENTENCES_PER_REPORT}"
         )
         sentences = sentences[:MAX_KPI_SENTENCES_PER_REPORT]
@@ -375,12 +541,16 @@ def build_kpi_sentences(raw_meta: Dict[str, Any]) -> List[str]:
     return sentences
 
 
-# -----------------------
+# -------------------------------
 # QDRANT
-# -----------------------
+# -------------------------------
 
 def init_qdrant():
-    client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+    # Connect to Qdrant Cloud via HTTPS + API key
+    client = QdrantClient(
+        url=QDRANT_URL,
+        api_key=QDRANT_API_KEY,
+    )
     model = SentenceTransformer(EMBED_MODEL_NAME)
     dim = model.get_sentence_embedding_dimension()
 
@@ -398,9 +568,9 @@ def init_qdrant():
     return client, model
 
 
-# -----------------------
+# --------------------------
 # DETERMINISTIC ID
-# -----------------------
+# --------------------------
 
 def stable_id(s3_key: str, source: str, ordinal: int, content: str) -> str:
     """
@@ -413,13 +583,13 @@ def stable_id(s3_key: str, source: str, ordinal: int, content: str) -> str:
 
 # -----------------------
 # MAIN STAGE 0
-# -----------------------
+# -------------------------
 
 def process_report(key: str, qdrant: QdrantClient, model: SentenceTransformer):
     logger.info(f"Processing {key}")
     data = download_s3_object(key)
 
-    html_raw: str | None = None
+    html_raw: Optional[str] = None
     table_sents: List[str] = []
 
     if key.lower().endswith(".pdf"):
@@ -431,32 +601,38 @@ def process_report(key: str, qdrant: QdrantClient, model: SentenceTransformer):
         logger.warning(f"Unknown format for {key}, skipping.")
         return
 
-    # --- TEXT INDEX ---
+    # TEXT INDEX
     tokens = tokenize(text)
     chunks = chunk_tokens(tokens, chunk_size=400, overlap=100)
     if not chunks:
         logger.warning(f"No text chunks produced for {key}")
         return
 
+    # E5 convention: prefix with "passage: "
+    text_inputs = [f"passage: {c}" for c in chunks]
     text_vectors = model.encode(
-        chunks, convert_to_numpy=True, show_progress_bar=False
+        text_inputs, convert_to_numpy=True, show_progress_bar=False
     )
 
     text_points: List[PointStruct] = []
     for idx, (chunk, vec) in enumerate(zip(chunks, text_vectors)):
-        pid = stable_id(key, "text", idx, chunk)  # deterministic ID
-        payload = {"s3_key": key, "chunk_id": idx, "source": "text"}
+        pid = stable_id(key, "text", idx, chunk)  #deterministic ID
+        payload = {
+            "s3_key": key,
+            "chunk_id": idx,
+            "source": "text",
+        }
         text_points.append(
             PointStruct(id=pid, vector=vec.tolist(), payload=payload)
         )
 
     for i in range(0, len(text_points), TEXT_BATCH_SIZE):
-        batch = text_points[i : i + TEXT_BATCH_SIZE]
+        batch = text_points[i: i + TEXT_BATCH_SIZE]
         qdrant.upsert(collection_name=TEXT_COL, points=batch)
     logger.info(f"Upserted {len(text_points)} text chunks for {key}")
 
-    # --- KPI INDEX ---
-    kpi_sentences = build_kpi_sentences(
+    #KPI INDEX (canonical facts + table + numeric) 
+    kpi_facts = build_kpi_facts(
         {
             "s3_key": key,
             "text": text,
@@ -465,25 +641,44 @@ def process_report(key: str, qdrant: QdrantClient, model: SentenceTransformer):
         }
     )
 
-    if kpi_sentences:
+    if kpi_facts:
+        kpi_sentences = [f["sentence"] for f in kpi_facts]
+        kpi_inputs = [f"passage: {s}" for s in kpi_sentences]
+
         kpi_vectors = model.encode(
-            kpi_sentences, convert_to_numpy=True, show_progress_bar=False
+            kpi_inputs, convert_to_numpy=True, show_progress_bar=False
         )
         kpi_points: List[PointStruct] = []
-        for idx, (sent, vec) in enumerate(zip(kpi_sentences, kpi_vectors)):
+
+        for idx, (fact, vec) in enumerate(zip(kpi_facts, kpi_vectors)):
+            sent = fact["sentence"]
             pid = stable_id(key, "kpi", idx, sent)  # deterministic ID
+            payload = {
+                "s3_key": key,
+                "sentence": sent,
+                "source": "kpi",
+                "fact_kind": fact.get("fact_kind"),
+                "concept": fact.get("concept"),
+                "context_id": fact.get("context_id"),
+                "unit_id": fact.get("unit_id"),
+                "unit": fact.get("unit"),
+                "period_start": fact.get("period_start"),
+                "period_end": fact.get("period_end"),
+                "members": fact.get("members", []),
+                "dimensions": fact.get("dimensions", []),
+            }
             kpi_points.append(
                 PointStruct(
                     id=pid,
                     vector=vec.tolist(),
-                    payload={"s3_key": key, "sentence": sent, "source": "kpi"},
+                    payload=payload,
                 )
             )
 
         for i in range(0, len(kpi_points), KPI_BATCH_SIZE):
-            batch = kpi_points[i : i + KPI_BATCH_SIZE]
+            batch = kpi_points[i: i + KPI_BATCH_SIZE]
             qdrant.upsert(collection_name=KPI_COL, points=batch)
-        logger.info(f"Upserted {len(kpi_points)} KPI sentences for {key}")
+        logger.info(f"Upserted {len(kpi_points)} KPI facts for {key}")
     else:
         logger.info(f"No KPI-like sentences extracted for {key}")
 

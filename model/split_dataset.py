@@ -9,7 +9,7 @@ import os
 import re
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from config import CFG
+from ingestion.config import CFG
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("split")
@@ -20,15 +20,14 @@ RESULTS_PREFIX = CFG["aws"]["output_prefix"].rstrip("/") + "/"
 RETR_PREFIX = RESULTS_PREFIX + "retrieval/"
 SPLIT_PREFIX = RESULTS_PREFIX + "splits/"
 
-random.seed(42)  # reproducible splits
+random.seed(42)  
 
 
 # ---------------------------------------------------
 # Explicit mapping: SITE folder name  ->  EDGAR ticker
-# (keys are cleaned: only letters, lowercase)
 # ---------------------------------------------------
 SITE_NAME_TO_TICKER = {
-    # direct overlaps EDGAR <-> SITE
+    # direct overlaps EDGAR to SITE
     "appleinc": "AAPL",
     "amazoncominc": "AMZN",
     "alphabetinc": "GOOGL",
@@ -42,9 +41,7 @@ SITE_NAME_TO_TICKER = {
     "pfizerinc": "PFE",
     "proctergamblecompany": "PG",
     "thecocacolacompany": "KO",
-    # SITE-only companies remain as separate "companies"
-    # (AstraZeneca, Danone, H&M, LVMH, Roche, Siemens, TotalEnergies, Toyota ...)
-    # will fall back to their cleaned name as company id.
+    
 }
 
 
@@ -114,18 +111,18 @@ def extract_company_from_s3_key(report_s3_key: str, known_tickers: List[str]) ->
 
     # SITE: normalize folder name, then map to ticker if we know it
     if source == "site":
-        cleaned = _clean_site_name(raw_company)  # 'Apple_Inc.' -> 'appleinc'
+        cleaned = _clean_site_name(raw_company)  #Apple_Inc -> appleinc
 
-        # 1) explicit mapping first (guarantees AAPL <-> Apple_Inc., etc.)
+        #explicit mapping first (guarantees AAPL to Apple_Inc., etc.)
         if cleaned in SITE_NAME_TO_TICKER:
             return SITE_NAME_TO_TICKER[cleaned]
 
-        # 2) fallback heuristic: if a known ticker appears verbatim in folder name
+        # fallback heuristic: if a known ticker appears verbatim in folder name
         for t in known_tickers:
             if t.lower() in cleaned:
                 return t.upper()
 
-        # 3) final fallback: treat the site company as its own identifier
+        #fallback: treat the site company as its own identifier
         return cleaned.upper()
 
     return "UNKNOWN"
@@ -148,7 +145,7 @@ def run_split():
         logger.warning("No items found in retrieval files. Aborting.")
         return
 
-    # 1) Collect known EDGAR tickers from report_s3_key (for heuristic fallback)
+    # Collect known EDGAR tickers from report_s3_key
     known_tickers = set()
     for item in all_items:
         rk = item.get("report_s3_key", "")
@@ -161,7 +158,7 @@ def run_split():
 
     logger.info(f"Known EDGAR tickers: {sorted(known_tickers)}")
 
-    # 2) Group claim-items by normalized company id
+    #Group claim-items by normalized company id
     company_to_items = defaultdict(list)
     for item in all_items:
         report_key = item.get("report_s3_key")
@@ -171,7 +168,6 @@ def run_split():
         company = extract_company_from_s3_key(report_key, list(known_tickers))
         company_to_items[company].append(item)
 
-    # Optional sanity log: see how many items per company
     for c, items in company_to_items.items():
         logger.info(f"Company {c}: {len(items)} items")
 
@@ -204,7 +200,7 @@ def run_split():
         elif company in test_companies:
             test_items.extend(items)
         else:
-            # this should only catch UNKNOWN/edge cases
+            # this should only catch UNKNOWN cases
             logger.debug(f"Company {company} not in any split; defaulting to test.")
             test_items.extend(items)
 
@@ -212,10 +208,10 @@ def run_split():
     logger.info(f"Dev items:   {len(dev_items)}")
     logger.info(f"Test items:  {len(test_items)}")
 
-    # 4) Ensure splits/ "folder" exists (optional)
+    # Ensure splits/ "folder" exists (optional)
     s3().put_object(Bucket=S3_BUCKET, Key=SPLIT_PREFIX, Body=b"")
 
-    # 5) Write split JSONs
+    #Write split JSONs
     s3_write_json(f"{SPLIT_PREFIX}claims_train.json", {
         "split": "train",
         "items": train_items,

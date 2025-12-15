@@ -1,16 +1,18 @@
-
 import os
 import io
 import json
 import logging
-from typing import Dict, Any, List, Tuple, Optional
+import random
+from typing import Dict, Any, List, Optional, Tuple
 from collections import Counter
-
 
 import boto3
 import pdfplumber
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torch.optim import AdamW
+from torch import amp
+
 
 from transformers import (
     DebertaV2Tokenizer,
@@ -18,18 +20,17 @@ from transformers import (
     get_linear_schedule_with_warmup,
 )
 
-from torch.optim import AdamW
-
-
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from config import CFG
+from ingestion.config import CFG
 
-# -------------------------
+# ----------------------------
 # Logging & basic config
-# -------------------------
+# ---------------------------
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("stage2_train")
+logger = logging.getLogger("stage2_train_mil")
+
+random.seed(42)
 
 AWS_REGION     = CFG["aws"]["region"]
 S3_BUCKET      = CFG["aws"]["s3_bucket_raw"]
@@ -40,50 +41,60 @@ VERI_PREFIX    = RESULTS_PREFIX + "verification/"
 DEVICE         = "cuda" if torch.cuda.is_available() else "cpu"
 MODEL_NAME     = os.getenv("CROSS_ENCODER_NAME", "microsoft/deberta-v3-base")
 
-# -------------------------
-# Labels (model space)
-# -------------------------
+# where to save
+SAVE_DIR  = "./deberta_finetuned_mil"
+
+#upload model on S3 under results/
+MODEL_S3_PREFIX = RESULTS_PREFIX + "models/deberta_finetuned_mil/"
+
+# ----------
+# Labels 
+# ---------
 ID2LABEL = {
     0: "support",
     1: "not support",
-    2: "don't know",
 }
 LABEL2ID = {v: k for k, v in ID2LABEL.items()}
 NUM_LABELS = len(ID2LABEL)
 
-# Raw labels as they appear in claims_*.json  -> normalized model labels
+# Raw labels from splits to normalized to our 2-way space
 RAW_TO_NORM_LABEL = {
     "support": "support",
     "notsupport": "not support",
+    "not support": "not support",
     "not_support": "not support",
-    "dontknow": "don't know",
-    "dont_know": "don't know",
-    "don't know": "don't know",
+    "no support": "not support",
 }
 
 # -------------------------
-# Chunking config
-# -------------------------
-CHUNK_SIZE    = 400
-CHUNK_OVERLAP = 100
+# Chunking & training config (tuned for lower VRAM)
+# ---------------------------
+CHUNK_SIZE = 400     
+CHUNK_OVERLAP = 100       
 
-BATCH_SIZE    = 8
-NUM_EPOCHS    = 3
-LEARNING_RATE = 2e-5
-WEIGHT_DECAY  = 0.01
-SAVE_DIR      = "./deberta_finetuned"
-TOP_K         = 5          # number of candidate evidences per claim to train on
+MAX_SEQ_LEN = 512     
+
+BATCH_SIZE = 4        # bags per batch 
+GRAD_ACCUM_STEPS = 8       # effective batch 
+
+NUM_EPOCHS = 15
+LEARNING_RATE = 1e-5
+WEIGHT_DECAY = 0.01
+
+TOP_K = 5        # retrieved candidates per claim 
+NEG_PER_CLAIM = 2        # random negative chunks per claim 
 
 TEXT_CACHE: Dict[str, List[str]] = {}
+JSON_CACHE: Dict[str, Any] = {}
+BYTES_CACHE: Dict[str, bytes] = {}
+MAX_BYTES_CACHE = 256  # number of docs cached in memory
+
+torch.backends.cudnn.benchmark = True  
+
 
 # -------------------------
 # S3 helpers
 # -------------------------
-
-JSON_CACHE: Dict[str, Any] = {}
-BYTES_CACHE: Dict[str, bytes] = {}
-MAX_BYTES_CACHE = 512  # avoid storing too many very large reports in memory
-
 def s3():
     return boto3.client("s3", region_name=AWS_REGION)
 
@@ -96,15 +107,16 @@ def s3_read_json(key: str) -> Dict[str, Any]:
     JSON_CACHE[key] = data
     return data
 
+
 def download_s3_bytes(key: str) -> bytes:
     if key in BYTES_CACHE:
         return BYTES_CACHE[key]
     body = s3().get_object(Bucket=S3_BUCKET, Key=key)["Body"].read()
-    # simple bounded cache: drop oldest when too big
     if len(BYTES_CACHE) >= MAX_BYTES_CACHE:
         BYTES_CACHE.pop(next(iter(BYTES_CACHE)))
     BYTES_CACHE[key] = body
     return body
+
 
 def s3_delete_if_exists(key: str):
     client = s3()
@@ -113,14 +125,27 @@ def s3_delete_if_exists(key: str):
         client.delete_object(Bucket=S3_BUCKET, Key=key)
         logger.info(f"Deleted existing file: s3://{S3_BUCKET}/{key}")
     except client.exceptions.ClientError:
-        pass  # not present
+        pass
+
 
 def s3_write_json(key: str, data: Dict[str, Any]):
     s3_delete_if_exists(key)
     body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
-    s3().put_object(Bucket=S3_BUCKET, Key=key, Body=body,
-                    ContentType="application/json")
+    s3().put_object(Bucket=S3_BUCKET, Key=key, Body=body, ContentType="application/json")
     logger.info(f"Saved s3://{S3_BUCKET}/{key}")
+
+
+def upload_dir_to_s3(local_dir: str, bucket: str, s3_prefix: str):
+    """Upload all files in a local directory to S3 under s3_prefix."""
+    client = s3()
+    for root, _, files in os.walk(local_dir):
+        for fname in files:
+            local_path = os.path.join(root, fname)
+            rel_path = os.path.relpath(local_path, local_dir)  # e.g. config.json
+            s3_key = os.path.join(s3_prefix, rel_path).replace("\\", "/")
+            client.upload_file(local_path, bucket, s3_key)
+            logger.info(f"Uploaded {local_path} -> s3://{bucket}/{s3_key}")
+
 
 # -------------------------
 # Text extraction & chunking
@@ -131,6 +156,7 @@ def simple_html_to_text(html_bytes: bytes) -> str:
     text = re.sub(r"<[^>]+>", " ", html)
     return re.sub(r"\s+", " ", text).strip()
 
+
 def pdf_to_text(pdf_bytes: bytes) -> str:
     parts = []
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
@@ -138,8 +164,10 @@ def pdf_to_text(pdf_bytes: bytes) -> str:
             parts.append(page.extract_text() or "")
     return "\n".join(parts)
 
+
 def tokenize_ws(text: str) -> List[str]:
     return text.split()
+
 
 def chunk_tokens(tokens: List[str],
                  chunk_size: int = CHUNK_SIZE,
@@ -153,6 +181,7 @@ def chunk_tokens(tokens: List[str],
         start = start + chunk_size - overlap
     return chunks
 
+
 def get_chunks_for_report(report_key: str) -> Optional[List[str]]:
     if report_key in TEXT_CACHE:
         return TEXT_CACHE[report_key]
@@ -161,16 +190,19 @@ def get_chunks_for_report(report_key: str) -> Optional[List[str]]:
         raw = download_s3_bytes(report_key)
         if report_key.lower().endswith(".pdf"):
             text = pdf_to_text(raw)
+        elif report_key.lower().endswith((".html", ".htm")):
+            text = simple_html_to_text(raw)
         else:
-            # treat everything else as HTML / text (Stage 0 logic)
+            # fallback: assume plain text / html
             text = simple_html_to_text(raw)
         toks = tokenize_ws(text)
-        chunks = chunk_tokens(toks)
+        chunks = chunk_tokens(toks, CHUNK_SIZE, CHUNK_OVERLAP)
         TEXT_CACHE[report_key] = chunks
         return chunks
     except Exception as e:
         logger.warning(f"Failed to load chunks for {report_key}: {e}")
         return None
+
 
 def get_text_chunk(report_key: str, chunk_id: int) -> Optional[str]:
     chunks = get_chunks_for_report(report_key)
@@ -181,46 +213,99 @@ def get_text_chunk(report_key: str, chunk_id: int) -> Optional[str]:
     logger.warning(f"chunk_id {chunk_id} out of range for {report_key} (len={len(chunks)})")
     return None
 
+
 # -------------------------
-# Dataset
+# Dataset (bag-level / MIL)
 # -------------------------
-class ClaimEvidenceDataset(Dataset):
+class ClaimBagDataset(Dataset):
     """
-    Dataset holding *pre-tokenized* encodings and labels.
-    No tokenization happens inside __getitem__.
+    Each item is:
+      (claim_text, [evidence_text_1, ..., evidence_text_m], label_id)
+    We'll pool over evidences inside the batch collate_fn.
     """
-    def __init__(self, encodings: Dict[str, torch.Tensor], labels: torch.Tensor):
-        self.encodings = encodings
+    def __init__(self,
+                 claims: List[str],
+                 bags: List[List[str]],
+                 labels: List[int]):
+        assert len(claims) == len(bags) == len(labels)
+        self.claims = claims
+        self.bags = bags
         self.labels = labels
 
     def __len__(self):
-        return self.labels.size(0)
+        return len(self.labels)
 
     def __getitem__(self, idx: int):
-        item = {k: v[idx] for k, v in self.encodings.items()}
-        item["labels"] = self.labels[idx]
-        return item
+        return self.claims[idx], self.bags[idx], self.labels[idx]
+
+
+def mil_collate_fn(batch, tokenizer: DebertaV2Tokenizer):
+    """
+    batch: list of (claim, [e1, e2, ...], label_id)
+
+    Returns:
+      {
+        'input_ids': [N_pairs, L],
+        'attention_mask': [N_pairs, L],
+        'bag_ids': [N_pairs],          # index of bag per pair
+        'bag_labels': [num_bags]
+      }
+    """
+    all_claims: List[str] = []
+    all_evidences: List[str] = []
+    bag_ids: List[int] = []
+    bag_labels: List[int] = []
+
+    for bag_idx, (claim, evidences, label_id) in enumerate(batch):
+        # ensure at least one evidence
+        if len(evidences) == 0:
+            continue
+        for ev in evidences:
+            all_claims.append(claim)
+            all_evidences.append(ev)
+            bag_ids.append(bag_idx)
+        bag_labels.append(label_id)
+
+    encodings = tokenizer(
+        all_claims,
+        all_evidences,
+        truncation=True,
+        padding="max_length",
+        max_length=MAX_SEQ_LEN,
+        return_tensors="pt",
+    )
+
+    bag_ids_tensor = torch.tensor(bag_ids, dtype=torch.long)
+    bag_labels_tensor = torch.tensor(bag_labels, dtype=torch.long)
+
+    return {
+        **encodings,
+        "bag_ids": bag_ids_tensor,
+        "bag_labels": bag_labels_tensor,
+    }
 
 
 # -------------------------
-# Build examples directly from split files (for training)
+# Build MIL bags from split
 # -------------------------
-def build_examples_for_split(split_name: str,
-                             tokenizer: DebertaV2Tokenizer,
-                             top_k: int = TOP_K):
-
+def build_bags_for_split(split_name: str,
+                         tokenizer: DebertaV2Tokenizer,
+                         top_k: int = TOP_K,
+                         neg_per_claim: int = NEG_PER_CLAIM
+                         ) -> Tuple[ClaimBagDataset, Counter]:
     split_key = f"{SPLIT_PREFIX}claims_{split_name}.json"
-    logger.info(f"Building examples for split '{split_name}' from s3://{S3_BUCKET}/{split_key}")
+    logger.info(f"Building MIL bags for split '{split_name}' from s3://{S3_BUCKET}/{split_key}")
 
     data = s3_read_json(split_key)
     items = data.get("items", [])
 
-    claims_list = []
-    evid_list   = []
-    label_ids   = []
+    claims_out: List[str] = []
+    bags_out: List[List[str]] = []
+    labels_out: List[int] = []
 
-    missing_label    = 0
+    missing_label = 0
     missing_evidence = 0
+    label_counter = Counter()
 
     for it in items:
         claim      = it.get("claim")
@@ -231,236 +316,104 @@ def build_examples_for_split(split_name: str,
             missing_label += 1
             continue
 
-        # normalize label
         norm_key = raw_label.lower()
         norm_label = RAW_TO_NORM_LABEL.get(norm_key)
         if norm_label is None or norm_label not in LABEL2ID:
+            # skip don't know / unknown labels
             missing_label += 1
             continue
 
         label_id = LABEL2ID[norm_label]
 
-        # take top-k candidates
         candidates = it.get("candidates", [])[:top_k]
-        if not candidates:
-            missing_evidence += 1
-            continue
+        evidences: List[str] = []
+        used_chunk_ids = set()
 
+        #retrieved candidates
         for cand in candidates:
-            # KPI short sentence
+            ev_text: Optional[str] = None
             if cand["collection"] == "reports_kpi" and cand.get("sentence"):
-                evidence_text = cand["sentence"]
+                ev_text = cand["sentence"]
             else:
                 cid = cand.get("chunk_id")
                 if cid is None:
-                    missing_evidence += 1
                     continue
+                ev_text = get_text_chunk(report_key=cand["source"], chunk_id=cid)
+                if ev_text:
+                    used_chunk_ids.add(cid)
 
-                evidence_text = get_text_chunk(report_key=cand["source"], chunk_id=cid)
-                if not evidence_text:
-                    missing_evidence += 1
-                    continue
+            if ev_text:
+                evidences.append(ev_text)
 
-            claims_list.append(claim)
-            evid_list.append(evidence_text)
-            label_ids.append(label_id)
+        #random negative chunks from same report
+        all_chunks = get_chunks_for_report(report_key)
+        if all_chunks and neg_per_claim > 0:
+            candidate_ids = [i for i in range(len(all_chunks)) if i not in used_chunk_ids]
+            random.shuffle(candidate_ids)
+            for cid in candidate_ids[:neg_per_claim]:
+                evidences.append(all_chunks[cid])
+
+        if not evidences:
+            missing_evidence += 1
+            continue
+
+        claims_out.append(claim)
+        bags_out.append(evidences)
+        labels_out.append(label_id)
+        label_counter[label_id] += 1
 
     logger.info(
-        f"Split '{split_name}': built {len(label_ids)} examples "
+        f"Split '{split_name}': built {len(labels_out)} MIL bags "
         f"(missing_label={missing_label}, missing_evidence={missing_evidence})"
     )
+    logger.info(f"Label distribution (id:count): {label_counter}")
 
-    # ---- Tokenize ONCE (big performance win)
-    encodings = tokenizer(
-        claims_list,
-        evid_list,
-        truncation=True,
-        padding="max_length",
-        max_length=512,
-        return_tensors="pt",
-    )
-
-    labels_tensor = torch.tensor(label_ids, dtype=torch.long)
-
-    return encodings, labels_tensor
+    dataset = ClaimBagDataset(claims_out, bags_out, labels_out)
+    return dataset, label_counter
 
 
 # -------------------------
-# Evaluation on pair level (for dev during training)
+# MIL evaluation (bag-level)
 # -------------------------
-def evaluate_pairwise(model: DebertaV2ForSequenceClassification,
-                      dataloader: DataLoader) -> float:
+def evaluate_mil(model: DebertaV2ForSequenceClassification,
+                 dataloader: DataLoader) -> float:
     model.eval()
     total = 0
     correct = 0
     with torch.no_grad():
         for batch in dataloader:
+            bag_ids = batch.pop("bag_ids").to(DEVICE)
+            bag_labels = batch.pop("bag_labels").to(DEVICE)
             batch = {k: v.to(DEVICE) for k, v in batch.items()}
-            labels = batch.pop("labels")
+
             outputs = model(**batch)
-            logits  = outputs.logits
-            preds   = torch.argmax(logits, dim=-1)
-            total  += labels.size(0)
-            correct += (preds == labels).sum().item()
+            logits = outputs.logits  # [N_pairs, 2]
+
+            n_bags = bag_labels.size(0)
+            bag_logits = torch.full(
+                (n_bags, NUM_LABELS),
+                float("-inf"),
+                device=logits.device,
+            )
+
+            for b in range(n_bags):
+                idxs = (bag_ids == b)
+                if idxs.sum() == 0:
+                    continue
+                #soft pooling: logsumexp over candidates in bag
+                bag_logits[b] = torch.logsumexp(logits[idxs], dim=0)
+
+            preds = torch.argmax(bag_logits, dim=-1)
+            total  += n_bags
+            correct += (preds == bag_labels).sum().item()
+
     return correct / total if total > 0 else 0.0
 
-# -------------------------
-# Inference helpers (aggregation over candidates)
-# -------------------------
-def normalize_gold_label(raw: Optional[str]) -> Optional[str]:
-    if raw is None:
-        return None
-    key = raw.lower()
-    return RAW_TO_NORM_LABEL.get(key)
-
-def predict_pair_probs(tokenizer: DebertaV2Tokenizer,
-                       model: DebertaV2ForSequenceClassification,
-                       claim: str,
-                       evidence: str,
-                       max_length: int = 512) -> torch.Tensor:
-    enc = tokenizer(
-        claim,
-        evidence,
-        truncation=True,
-        padding="max_length",
-        max_length=max_length,
-        return_tensors="pt",
-    ).to(DEVICE)
-    with torch.no_grad():
-        logits = model(**enc).logits  # [1, 3]
-        probs  = torch.softmax(logits, dim=-1)  # [1, 3]
-    return probs.squeeze(0).cpu()  # [3]
-
-def aggregate_over_candidates(claim_item: Dict[str, Any],
-                              tokenizer: DebertaV2Tokenizer,
-                              model: DebertaV2ForSequenceClassification) -> Dict[str, Any]:
-    """
-    claim_item:
-      {
-        "claim": str,
-        "report_s3_key": str,
-        "candidates": [{id, collection, score, source, chunk_id, sentence}, ...],
-        "label": raw_label   # optional gold label
-      }
-    """
-    claim      = claim_item["claim"]
-    report_key = claim_item["report_s3_key"]
-    candidates = claim_item.get("candidates", [])
-
-    max_probs = torch.zeros(NUM_LABELS)
-    best_ev_idx_for_label = [-1] * NUM_LABELS
-    all_evidence_scored = []
-
-    for idx, cand in enumerate(candidates):
-        # Evidence text
-        if cand["collection"] == "reports_kpi" and cand.get("sentence"):
-            evidence_text = cand["sentence"]
-        else:
-            cid = cand.get("chunk_id")
-            if cid is None:
-                continue
-            evidence_text = get_text_chunk(report_key=cand["source"], chunk_id=cid)
-            if not evidence_text:
-                continue
-
-        probs = predict_pair_probs(tokenizer, model, claim, evidence_text)  # [3]
-        all_evidence_scored.append((idx, probs.tolist()))
-
-        # update max per label
-        for y in range(NUM_LABELS):
-            if probs[y] > max_probs[y]:
-                max_probs[y] = probs[y]
-                best_ev_idx_for_label[y] = idx
-
-    # final label = argmax_y max_i P(y|c,e_i)
-    y_star = int(torch.argmax(max_probs).item())
-    final_label = ID2LABEL[y_star]
-
-    best_idx = best_ev_idx_for_label[y_star]
-    best_evidence = candidates[best_idx] if best_idx >= 0 else None
-
-    if best_evidence is not None:
-        for idx, p in all_evidence_scored:
-            if idx == best_idx:
-                best_evidence = {**best_evidence, "probs": p}
-                break
-
-    out = {
-        "claim": claim,
-        "report_s3_key": report_key,
-        "final_label": final_label,
-        "label_confidences": {
-            ID2LABEL[i]: float(max_probs[i].item()) for i in range(NUM_LABELS)
-        },
-        "best_evidence": best_evidence,
-    }
-
-    # keep gold label (normalized + raw) if present
-    if "label" in claim_item:
-        raw = claim_item["label"]
-        norm = normalize_gold_label(raw)
-        out["gold_label_raw"]  = raw
-        if norm is not None:
-            out["gold_label"] = norm
-
-    return out
-
-def run_aggregated_inference_on_split(model: DebertaV2ForSequenceClassification,
-                                      tokenizer: DebertaV2Tokenizer,
-                                      split_name: str = "test"):
-    """
-    Run Stage 2 aggregation inference on claims_{split}.json
-    using the (fine-tuned) model and write verification JSON to S3.
-    """
-    split_key = f"{SPLIT_PREFIX}claims_{split_name}.json"
-    logger.info(f"[Inference] Loading split from s3://{S3_BUCKET}/{split_key}")
-    data = s3_read_json(split_key)
-    items = data.get("items", [])
-    logger.info(f"[Inference] Loaded {len(items)} items for split '{split_name}'.")
-
-    outputs = {
-        "split": split_name,
-        "source_split_key": split_key,
-        "cross_encoder": MODEL_NAME + " (fine-tuned)",
-        "aggregation": "argmax_y max_i P(y|c,e_i)",
-        "results": [],
-        "metrics": {},
-    }
-
-    total_with_gold = 0
-    total_correct   = 0
-
-    for claim_item in items:
-        out = aggregate_over_candidates(claim_item, tokenizer, model)
-        outputs["results"].append(out)
-
-        gold = out.get("gold_label")  # already normalized string
-        if gold is not None:
-            total_with_gold += 1
-            if out["final_label"] == gold:
-                total_correct += 1
-
-    if total_with_gold > 0:
-        accuracy = total_correct / total_with_gold
-        outputs["metrics"] = {
-            "num_with_gold": total_with_gold,
-            "num_correct": total_correct,
-            "accuracy": accuracy,
-        }
-        logger.info(
-            f"[{split_name}] Aggregated accuracy on {total_with_gold} labeled items: "
-            f"{total_correct}/{total_with_gold} = {accuracy:.4f}"
-        )
-    else:
-        logger.warning("[Inference] No gold labels found in split – accuracy cannot be computed.")
-
-    out_key = f"{VERI_PREFIX}deberta_ft_{split_name}.json"
-    s3_write_json(out_key, outputs)
 
 # -------------------------
-# Main training + inference
+# Main training
 # -------------------------
-def main():
+def train():
     logger.info(f"Loading base model: {MODEL_NAME}")
     tokenizer = DebertaV2Tokenizer.from_pretrained(MODEL_NAME)
     model = DebertaV2ForSequenceClassification.from_pretrained(
@@ -469,87 +422,174 @@ def main():
         id2label=ID2LABEL,
         label2id=LABEL2ID,
     ).to(DEVICE)
-
-    # ---- Build train & dev examples directly from split files
-    train_enc, train_labels = build_examples_for_split("train", tokenizer, top_k=TOP_K)
-    dev_enc,   dev_labels   = build_examples_for_split("dev", tokenizer, top_k=TOP_K)
     
-    print("Train label dist:", Counter(train_labels.tolist()))
-    print("Dev label dist:", Counter(dev_labels.tolist()))  
+    #Freeze most of the encoder,fine-tune top N layers and classifier
+    N_UNFROZEN_LAYERS = 4  # tune
 
-    train_dataset = ClaimEvidenceDataset(train_enc, train_labels)
-    dev_dataset   = ClaimEvidenceDataset(dev_enc, dev_labels)
+    # Freeze everything by default
+    for param in model.parameters():
+        param.requires_grad = False
 
-    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-    dev_loader   = DataLoader(dev_dataset,   batch_size=BATCH_SIZE, shuffle=False)
+    #Unfreeze classifier head
+    for param in model.classifier.parameters():
+        param.requires_grad = True
 
-    # ---- Optimizer & scheduler
+    #Unfreeze top N transformer layers
+    encoder_layers = model.deberta.encoder.layer
+    for layer in encoder_layers[-N_UNFROZEN_LAYERS:]:
+        for param in layer.parameters():
+            param.requires_grad = True
+
+
+    # build MIL datasets
+    train_dataset, train_label_dist = build_bags_for_split("train", tokenizer)
+    dev_dataset,   dev_label_dist   = build_bags_for_split("dev",   tokenizer)
+
+    logger.info(f"Train label dist (id:count): {train_label_dist}")
+    logger.info(f"Dev label dist (id:count):   {dev_label_dist}")
+
+    def collate(batch):
+        return mil_collate_fn(batch, tokenizer)
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        collate_fn=collate,
+        num_workers=4,
+        pin_memory=True,
+        persistent_workers=True,
+    )
+
+    dev_loader = DataLoader(
+        dev_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        collate_fn=collate,
+        num_workers=4,
+        pin_memory=True,
+        persistent_workers=True,
+    )
+
+    # optimizer and scheduler
     no_decay = ["bias", "LayerNorm.weight"]
     optimizer_grouped_parameters = [
-        {
-            "params": [p for n, p in model.named_parameters()
-                       if not any(nd in n for nd in no_decay)],
-            "weight_decay": WEIGHT_DECAY,
-        },
-        {
-            "params": [p for n, p in model.named_parameters()
-                       if any(nd in n for nd in no_decay)],
-            "weight_decay": 0.0,
-        },
+    {
+        "params": [
+            p for n, p in model.named_parameters()
+            if p.requires_grad and not any(nd in n for nd in no_decay)
+        ],
+        "weight_decay": WEIGHT_DECAY,
+    },
+    {
+        "params": [
+            p for n, p in model.named_parameters()
+            if p.requires_grad and any(nd in n for nd in no_decay)
+        ],
+        "weight_decay": 0.0,
+    },
     ]
+
     optimizer = AdamW(optimizer_grouped_parameters, lr=LEARNING_RATE)
 
-    num_training_steps = NUM_EPOCHS * len(train_loader)
+    num_training_steps = NUM_EPOCHS * max(1, len(train_loader)) // max(1, GRAD_ACCUM_STEPS)
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
         num_warmup_steps=max(0, int(0.1 * num_training_steps)),
         num_training_steps=num_training_steps,
     )
 
-    # ---- Training loop
-    logger.info(f"Starting training for {NUM_EPOCHS} epochs on {len(train_dataset)} examples")
+    logger.info(
+        f"Starting MIL training for {NUM_EPOCHS} epochs "
+        f"on {len(train_dataset)} bags "
+        f"(batch_size={BATCH_SIZE}, grad_accum={GRAD_ACCUM_STEPS}, max_seq_len={MAX_SEQ_LEN})"
+    )
+    
+    scaler = amp.GradScaler(device="cuda")
+    optimizer.zero_grad(set_to_none=True)
+
+    
+    # best_dev_acc = -1.0
+
+
     for epoch in range(NUM_EPOCHS):
         model.train()
         total_loss = 0.0
 
         for step, batch in enumerate(train_loader):
-            
-            if step % 10 == 0:
-                logger.info(f"Epoch {epoch+1}, step {step}/{len(train_loader)}")
-                
+            bag_ids = batch.pop("bag_ids").to(DEVICE)
+            bag_labels = batch.pop("bag_labels").to(DEVICE)
             batch = {k: v.to(DEVICE) for k, v in batch.items()}
-            labels = batch.pop("labels")
 
-            outputs = model(**batch, labels=labels)
-            loss = outputs.loss
+            with amp.autocast(device_type="cuda"):
+                outputs = model(**batch)
+                logits = outputs.logits  # [N_pairs, 2]
 
-            loss.backward()
+                n_bags = bag_labels.size(0)
+                bag_logits = torch.full(
+                    (n_bags, NUM_LABELS),
+                    float("-inf"),
+                    device=logits.device,
+                )
+
+                # soft pooling: logsumexp over candidates per bag
+                for b in range(n_bags):
+                    idxs = (bag_ids == b)
+                    if idxs.sum() == 0:
+                        continue
+                    bag_logits[b] = torch.logsumexp(logits[idxs], dim=0)
+
+                loss = torch.nn.functional.cross_entropy(bag_logits, bag_labels)
+                loss = loss / GRAD_ACCUM_STEPS
+
+            scaler.scale(loss).backward()
             total_loss += loss.item()
 
-            optimizer.step()
-            scheduler.step()
-            optimizer.zero_grad()
+            if (step + 1) % GRAD_ACCUM_STEPS == 0:
+                scaler.step(optimizer)
+                scaler.update()
+                scheduler.step()
+                optimizer.zero_grad()
+
 
             if (step + 1) % 50 == 0:
                 avg_loss = total_loss / (step + 1)
-                logger.info(f"Epoch {epoch+1} Step {step+1}/{len(train_loader)} - loss={avg_loss:.4f}")
+                logger.info(
+                    f"Epoch {epoch+1} Step {step+1}/{len(train_loader)} "
+                    f"- loss={avg_loss:.4f}"
+                )
+        
+        if (step + 1) % GRAD_ACCUM_STEPS != 0:
+            scaler.step(optimizer)
+            scaler.update()
+            scheduler.step()
+            optimizer.zero_grad()
 
         avg_train_loss = total_loss / max(1, len(train_loader))
-        dev_acc = evaluate_pairwise(model, dev_loader) if len(dev_dataset) > 0 else float("nan")
+        dev_acc = evaluate_mil(model, dev_loader) if len(dev_dataset) > 0 else float("nan")
         logger.info(
             f"Epoch {epoch+1} finished. "
-            f"train_loss={avg_train_loss:.4f}, dev_pairwise_accuracy={dev_acc:.4f}"
+            f"train_loss={avg_train_loss:.4f}, dev_bag_accuracy={dev_acc:.4f}"
         )
 
-    # ---- Save fine-tuned model
+        # if not torch.isnan(torch.tensor(dev_acc)) and dev_acc > best_dev_acc:
+        #     best_dev_acc = dev_acc
+        #     os.makedirs(SAVE_DIR, exist_ok=True)
+        #     model.save_pretrained(SAVE_DIR)
+        #     tokenizer.save_pretrained(SAVE_DIR)
+        #     logger.info(f"New best dev acc={dev_acc:.4f}, saved model to {SAVE_DIR}")
+
+
+    #Save fine-tuned model locally
     os.makedirs(SAVE_DIR, exist_ok=True)
     model.save_pretrained(SAVE_DIR)
     tokenizer.save_pretrained(SAVE_DIR)
-    logger.info(f"Saved fine-tuned model to {SAVE_DIR}")
-    logger.info("To reuse later, set CROSS_ENCODER_NAME to this folder.")
+    logger.info(f"Saved fine-tuned MIL model locally to {SAVE_DIR}")
 
-    # ---- Run Stage 2 aggregated inference on test split with the fine-tuned model
-    run_aggregated_inference_on_split(model, tokenizer, split_name="test")
+    #Upload model to S3 under results/models/...
+    upload_dir_to_s3(SAVE_DIR, S3_BUCKET, MODEL_S3_PREFIX)
+    logger.info(f"Uploaded fine-tuned MIL model to s3://{S3_BUCKET}/{MODEL_S3_PREFIX}")
+
 
 if __name__ == "__main__":
-    main()
+    train()
