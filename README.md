@@ -14,3 +14,16 @@ conda create -n greenverifier python=3.10
 conda activate greenverifier
 pip install -r requirements.txt
 
+
+## Running the Pipelinesbatch run_stage2_training.slurm
+
+
+GreenVerifier is organized as a three-stage pipeline. Each stage can be executed independently, but must be run in order.
+
+
+```bash
+sbatch run_stage0.slurm
+sbatch run_stage1.slurm
+sbatch run_stage2_inference.slurm
+sbatch run_stage2_training.slurm
+
