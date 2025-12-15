@@ -13,10 +13,9 @@ The pipeline consists of preprocessing and indexing of reports, dense retrieval 
 conda create -n greenverifier python=3.10
 conda activate greenverifier
 pip install -r requirements.txt
+```
 
-
-## Running the Pipelinesbatch run_stage2_training.slurm
-
+## Running the Pipeline
 
 GreenVerifier is organized as a three-stage pipeline. Each stage can be executed independently, but must be run in order.
 
