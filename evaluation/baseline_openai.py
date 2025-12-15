@@ -219,7 +219,7 @@ Here are some examples
     prompt += f"\nNow answer if this claim support or not\nclaim: {claim}\ndoc: {doc}\nevidence & answer: "
     
     response = client.chat.completions.create(
-        model="deepseek-chat",
+        model="gpt-5-nano",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
@@ -251,7 +251,7 @@ Here are some examples
 def main():
     logger.info("Using HF model: %s", HF_MODEL)
     logger.info("Loading model with 4-bit quantization...")
-    client = OpenAI(base_url="https://api.deepseek.com", api_key=API_KEY)
+    client = OpenAI(api_key=API_KEY)
     logger.info("Model loaded successfully")
 
     NUM_EXAMPLE = 3
