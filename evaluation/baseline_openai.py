@@ -304,7 +304,7 @@ def main():
             else:
                 output["prediction"] = "support" if answer == 1 else "not support"
         else:
-            answer  = zero_shot(model, tokenizer, doc, claim, label)
+            answer  = zero_shot(doc, claim, label)
             results.append({
                 "label": 1 if label == "support" else 0,
                 "prediction": answer
