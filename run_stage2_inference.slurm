@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=stage2_train
+#SBATCH --job-name=stage2_inference
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:2               
 #SBATCH --cpus-per-task=8
@@ -15,4 +15,4 @@ module load gcc/13.3.0
 module load python/3.11.9
 module load cuda/12.4.0
 
-/project2/swabhas_1765/ray-alex/green-verifier/venv/bin/python stage2_training.py
+/project2/swabhas_1765/ray-alex/green-verifier/venv/bin/python stage2_inference.py

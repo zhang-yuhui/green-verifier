@@ -1,415 +1,419 @@
-# rag_s3_pipeline.py  (with GPU memory management)
 import os
+import io
+import re
 import json
-import time
-import tempfile
-import gc  # <--- Added for garbage collection
-from collections import defaultdict
-from typing import Dict, Any, List, Tuple
+import logging
+from typing import Dict, Any, List, Optional
 
 import boto3
-from dotenv import load_dotenv
+import pdfplumber
+from huggingface_hub import InferenceClient
 
-# ---- LangChain / Transformers bits
-from langchain_community.document_loaders import PyMuPDFLoader, BSHTMLLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import FAISS
+import sys
+from ingestion.config import CFG
 
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough, RunnableParallel
-from langchain_core.output_parsers import StrOutputParser
+# -------------------------
+# Logging
+# -------------------------
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("llm_claim_gen")
 
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
-from langchain_huggingface import HuggingFacePipeline, ChatHuggingFace
-import torch
+# -------------------------
+# Config from ENV + CFG
+# -------------------------
 
-# --------------------------------------------------------------------------------------
-# 0) Config
-# --------------------------------------------------------------------------------------
-load_dotenv()  # reads .env next to this file or current working dir
+# Hugging Face token 
+HF_TOKEN = os.environ.get("HF_TOKEN")
+if HF_TOKEN is None:
+    raise RuntimeError("Please set HF_TOKEN environment variable to your Hugging Face token.")
 
-CFG = {
-    "aws": {
-        "region": os.getenv("AWS_REGION", "eu-central-1"),
-        "s3_bucket_raw": os.getenv("S3_BUCKET_RAW"),
-        "prefix_edgar": os.getenv("S3_PREFIX_EDGAR", "edgar/"),
-        "prefix_site": os.getenv("S3_PREFIX_SITE", "site/"),
-        "output_prefix": os.getenv("S3_OUTPUT_PREFIX", "results/"),
-    }
-}
+#HF chat model name =
+HF_MODEL = os.environ.get("HF_MODEL", "meta-llama/Meta-Llama-3-8B-Instruct")
 
-VERBOSE = True  # <- flip to False to reduce prints
+AWS_REGION = CFG["aws"]["region"]
+S3_BUCKET = CFG["aws"]["s3_bucket_raw"]
+PREFIX_EDGAR = CFG["aws"]["prefix_edgar"].rstrip("/") + "/"
+PREFIX_SITE = CFG["aws"]["prefix_site"].rstrip("/") + "/"
+OUTPUT_PREFIX = CFG["aws"]["output_prefix"].rstrip("/") + "/"  # "results/"
 
-def log(msg: str):
-    if VERBOSE:
-        print(msg)
 
-def preview(txt: str, n: int = 160) -> str:
-    txt = txt.replace("\n", " ").strip()
-    return (txt[:n] + "…") if len(txt) > n else txt
+MAX_TEXT_CHARS = int(os.environ.get("MAX_TEXT_CHARS", "8000"))
 
-# --------------------------------------------------------------------------------------
-# NEW: GPU Memory Management Helper
-# --------------------------------------------------------------------------------------
-def clear_gpu_memory():
-    """Clear GPU memory and run garbage collection"""
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-        torch.cuda.ipc_collect()
-    gc.collect()
-    
-def log_gpu_memory():
-    """Log current GPU memory usage"""
-    if torch.cuda.is_available() and VERBOSE:
-        allocated = torch.cuda.memory_allocated() / 1024**3  # GB
-        reserved = torch.cuda.memory_reserved() / 1024**3    # GB
-        log(f"[GPU] Allocated: {allocated:.2f}GB | Reserved: {reserved:.2f}GB")
+# claims per report (minimum target)
+N_CLAIMS = 6
 
-# --------------------------------------------------------------------------------------
-# 1) LLM (local HF)
-# --------------------------------------------------------------------------------------
-def build_local_chat(
-    model_id: str = "meta-llama/Meta-Llama-3.1-8B-Instruct",
-    max_new_tokens: int = 512,
-    temperature: float = 0.1,
-    do_sample: bool = False,
-    quant_4bit: bool = False,
-):
-    start = time.time()
-    dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    log(f"[LLM] Loading model: {model_id} | device={device} | dtype={dtype} | 4bit={quant_4bit}")
+# -------------------------
+# S3 helpers
+# -------------------------
 
-    quantization_config = None
-    if quant_4bit:
-        try:
-            from transformers import BitsAndBytesConfig
-            quantization_config = BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_quant_type="nf4",
-                bnb_4bit_use_double_quant=True,
-                bnb_4bit_compute_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
-            )
-        except Exception as e:
-            log(f"[LLM] bitsandbytes unavailable ({e}); running without 4-bit.")
-            quantization_config = None
+def s3_client():
+    return boto3.client("s3", region_name=AWS_REGION)
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id, use_fast=True)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        torch_dtype=dtype,
-        low_cpu_mem_usage=True,
-        device_map="auto" if torch.cuda.is_available() else None,
-        quantization_config=quantization_config,
-    )
 
-    gen_pipe = pipeline(
-        "text-generation",
-        model=model,
-        tokenizer=tokenizer,
-        max_new_tokens=max_new_tokens,
-        temperature=temperature,
-        do_sample=do_sample,
-        return_full_text=False,
-    )
-
-    llm = HuggingFacePipeline(pipeline=gen_pipe)
-    log(f"[LLM] Model ready in {time.time()-start:.1f}s")
-    log_gpu_memory()
-    return ChatHuggingFace(llm=llm)
-
-# --------------------------------------------------------------------------------------
-# 2) S3 helpers (supports .pdf, .html, .htm)
-# --------------------------------------------------------------------------------------
-def list_s3_keys(
-    bucket: str,
-    prefix: str,
-    region: str,
-    suffixes: Tuple[str, ...] = (".pdf", ".html", ".htm"),
-) -> List[str]:
-    s3 = boto3.client("s3", region_name=region)
-    paginator = s3.get_paginator("list_objects_v2")
+def list_objects_under_prefix(prefix: str) -> List[str]:
+    """
+    List all non-folder objects under a given prefix.
+    """
     keys: List[str] = []
-    cnt = 0
-    for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
-        for obj in page.get("Contents", []):
-            key = obj["Key"]
-            cnt += 1
-            if key.lower().endswith(suffixes):
-                keys.append(key)
-    log(f"[S3] Prefix '{prefix}': scanned {cnt} objects, matched {len(keys)} ({', '.join(suffixes)})")
+    s3 = s3_client()
+    paginator = s3.get_paginator("list_objects_v2")
+
+    for page in paginator.paginate(Bucket=S3_BUCKET, Prefix=prefix):
+        for item in page.get("Contents", []):
+            key = item["Key"]
+            if key.endswith("/"):
+                continue
+            keys.append(key)
+
     return keys
 
-def download_to_temp(bucket: str, key: str, region: str) -> str:
-    s3 = boto3.client("s3", region_name=region)
-    ext = "." + key.split(".")[-1].lower()
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=ext)
-    s3.download_fileobj(bucket, key, tmp)
-    tmp.flush(); tmp.close()
-    log(f"[S3] Downloaded s3://{bucket}/{key} -> {tmp.name}")
-    return tmp.name
 
-def load_single_s3_doc(bucket: str, key: str, region: str) -> List:
-    local_path = download_to_temp(bucket, key, region)
-    s3_uri = f"s3://{bucket}/{key}"
-
-    if key.lower().endswith(".pdf"):
-        loader = PyMuPDFLoader(local_path)
-        kind = "PDF"
-    elif key.lower().endswith((".html", ".htm")):
-        loader = BSHTMLLoader(local_path, bs_kwargs={"features": "lxml-xml"})
-        kind = "HTML"
-    else:
-        return []
-
-    docs = loader.load()
-    log(f"[LOAD] {kind} pages loaded: {len(docs)} | {s3_uri}")
-
-    # Clean up temp file immediately
-    try:
-        os.unlink(local_path)
-    except:
-        pass
-
-    # normalize prefixes to detect origin
-    edgar_pfx = CFG["aws"]["prefix_edgar"].rstrip("/") + "/"
-    for d in docs:
-        d.metadata["source"] = s3_uri
-        d.metadata["file_path"] = s3_uri
-        d.metadata["origin"] = "edgar" if key.startswith(edgar_pfx) else "site"
-    return docs
-
-def load_docs_from_s3_sources(cfg: Dict[str, Any], max_files: int | None = 5) -> Dict[str, List]:
-    bucket = cfg["aws"]["s3_bucket_raw"]
-    region = cfg["aws"]["region"]
-    prefixes = [cfg["aws"]["prefix_edgar"], cfg["aws"]["prefix_site"]]
-
-    # 1) Collect all matching keys across prefixes
-    all_keys: List[str] = []
-    for pfx in prefixes:
-        all_keys.extend(list_s3_keys(bucket, pfx, region))
-
-    # 2) Make selection deterministic and cap to max_files
-    all_keys = sorted(all_keys)
-    if max_files is not None:
-        all_keys = all_keys[:max_files]
-
-    log(f"[LOAD] Will process {len(all_keys)} file(s):")
-    for i, k in enumerate(all_keys, 1):
-        log(f"  - [{i}] s3://{bucket}/{k}")
-
-    # 3) Download + load only the selected keys
-    grouped_docs: Dict[str, List] = defaultdict(list)
-    for key in all_keys:
-        docs = load_single_s3_doc(bucket, key, region)
-        if not docs:
-            continue
-        grouped_docs[f"s3://{bucket}/{key}"].extend(docs)
-
-    log(f"[LOAD] Grouped files (selected): {len(grouped_docs)}")
-    return dict(grouped_docs)
+def download_bytes(key: str) -> bytes:
+    s3 = s3_client()
+    obj = s3.get_object(Bucket=S3_BUCKET, Key=key)
+    return obj["Body"].read()
 
 
-# --------------------------------------------------------------------------------------
-# 3) RAG utilities (with memory cleanup)
-# --------------------------------------------------------------------------------------
-def build_retriever_from_docs(
-    docs,
-    embed_model: str = "intfloat/e5-base-v2",
-    chunk_size: int = 1200,
-    chunk_overlap: int = 200,
-    k: int = 4,
-):
-    _device = "cuda" if torch.cuda.is_available() else "cpu"
-    splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-    splits = splitter.split_documents(docs)
-    log(f"[CHUNK] chunks={len(splits)} (size={chunk_size}, overlap={chunk_overlap})")
-    embeddings = HuggingFaceEmbeddings(model_name=embed_model, model_kwargs={"device": _device})
-    log(f"[EMB] model={embed_model} | device={_device}")
-    vs = FAISS.from_documents(splits, embeddings)
-    log(f"[INDEX] FAISS built")
-    retriever = vs.as_retriever(search_kwargs={"k": k})
-    
-    # Return both retriever and references to objects we need to clean up
-    return retriever, vs, embeddings
-
-def format_docs(docs) -> str:
-    return "\n\n".join(f"[{i+1}] " + d.page_content for i, d in enumerate(docs))
-
-def unique_sources(docs) -> List[str]:
-    return list(dict.fromkeys([d.metadata.get("source") or d.metadata.get("file_path") for d in docs]))
-
-def build_rag_chain(retriever, chat_model):
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are a helpful assistant. Answer using only the provided context. "
-                       "If the answer isn't in the context, say you don't know."),
-            ("human", "Question: {question}\n\nContext:\n{context}"),
-        ]
-    )
-    rag_from_docs = (
-        RunnablePassthrough.assign(context=lambda x: format_docs(x["context"]))
-        | prompt
-        | chat_model
-        | StrOutputParser()
-    )
-    return (
-        RunnableParallel({"context": retriever, "question": RunnablePassthrough()})
-        .assign(answer=rag_from_docs)
-        .assign(sources=lambda x: unique_sources(x["context"]))
-    )
-
-# --------------------------------------------------------------------------------------
-# 4) Batch over S3 + save results (with GPU memory management)
-# --------------------------------------------------------------------------------------
-def process_batch_s3(
-    cfg: Dict[str, Any],
-    question: str,
-    model_id: str = "meta-llama/Meta-Llama-3.1-8B-Instruct",
-    quant_4bit: bool = False,
-    output_filename: str = "batch_results.json",
-    max_files: int | None = 5,   # <--- NEW
-) -> Dict[str, Any]:
-    bucket = cfg["aws"]["s3_bucket_raw"]
-    region = cfg["aws"]["region"]
-    out_prefix = cfg["aws"]["output_prefix"].strip("/")
-
-    groups = load_docs_from_s3_sources(cfg, max_files=max_files)
-    if not groups:
-        print("No .pdf/.html/.htm files found under edgar/ or site/")
-        return {}
-
-    print(f"Found {len(groups)} file(s) in s3://{bucket}/")
-    chat_model = build_local_chat(model_id=model_id, quant_4bit=quant_4bit)
-
-    results: Dict[str, Any] = {}
-    for i, (s3_source, docs) in enumerate(groups.items(), 1):
-        print(f"\n[{i}/{len(groups)}] Processing: {s3_source}")
-        
-        # Initialize variables for cleanup
-        retriever = None
-        vectorstore = None
-        embeddings = None
-        rag = None
-        
-        try:
-            t0 = time.time()
-            log_gpu_memory()
-            
-            # Build retriever and keep references for cleanup
-            retriever, vectorstore, embeddings = build_retriever_from_docs(docs)
-
-            # Use torch.no_grad() to prevent gradient tracking
-            with torch.no_grad():
-                # Preview what will be fed to the model (top-k retrieved)
-                k = retriever.search_kwargs.get("k", 4)
-                retrieved = retriever.invoke(question)
-                log(f"[RETRIEVE] k={k} | got={len(retrieved)}")
-                for j, d in enumerate(retrieved, 1):
-                    src = d.metadata.get("source", "unknown")
-                    log(f"  - [{j}] {src} | {preview(d.page_content)}")
-
-                # Build chain and run
-                rag = build_rag_chain(retriever, chat_model)
-                result = rag.invoke(question)
-
-            # Print a short answer preview
-            ans_preview = result["answer"]
-            if isinstance(ans_preview, (list, dict)):
-                ans_preview = json.dumps(ans_preview)
-            log(f"[ANSWER] {preview(ans_preview, 240)}")
-            log(f"[TIME] {time.time()-t0:.1f}s for {s3_source}")
-
-            results[s3_source] = {
-                "status": "success",
-                "answer": result["answer"],
-                "sources": result["sources"]
-            }
-            print("✓ Completed")
-            
-        except Exception as e:
-            results[s3_source] = {"status": "error", "error": str(e)}
-            print(f"✗ Error: {e}")
-        
-        finally:
-            # ---- CRITICAL: Clean up memory after each file ----
-            log("[CLEANUP] Releasing memory...")
-            
-            # Delete the RAG chain
-            if rag is not None:
-                del rag
-            
-            # Delete retriever
-            if retriever is not None:
-                del retriever
-            
-            # Delete vectorstore and its index
-            if vectorstore is not None:
-                if hasattr(vectorstore, 'index'):
-                    del vectorstore.index
-                del vectorstore
-            
-            # Delete embeddings model
-            if embeddings is not None:
-                if hasattr(embeddings, 'client'):
-                    del embeddings.client
-                del embeddings
-            
-            # Clear the documents from this iteration
-            del docs
-            
-            # Force garbage collection
-            clear_gpu_memory()
-            log_gpu_memory()
-            log("[CLEANUP] Done")
-
-    # Final cleanup
-    clear_gpu_memory()
-    
-    batch_results = {"total_files": len(groups), "results": results}
-
-    s3 = boto3.client("s3", region_name=region)
-    out_key = f"{out_prefix}/{output_filename}" if out_prefix else output_filename
+def s3_write_json(key: str, data: Dict[str, Any]):
+    """
+    Upload JSON to s3://S3_BUCKET/key
+    """
+    s3 = s3_client()
+    body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
     s3.put_object(
-        Bucket=bucket,
-        Key=out_key,
-        Body=json.dumps(batch_results, indent=2, ensure_ascii=False).encode("utf-8"),
+        Bucket=S3_BUCKET,
+        Key=key,
+        Body=body,
         ContentType="application/json",
     )
-    print(f"\nResults saved to s3://{bucket}/{out_key}")
-    
-    log_gpu_memory()
-    return batch_results
+    logger.info(f"Uploaded JSON to s3://{S3_BUCKET}/{key}")
 
-# --------------------------------------------------------------------------------------
-# 5) CLI
-# --------------------------------------------------------------------------------------
+
+# -------------------------
+# Text extraction
+# -------------------------
+
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+
+def html_to_text(raw_bytes: bytes) -> str:
+    text = raw_bytes.decode("utf-8", errors="ignore")
+    text = HTML_TAG_RE.sub(" ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def pdf_to_text(raw_bytes: bytes) -> str:
+    parts: List[str] = []
+    with pdfplumber.open(io.BytesIO(raw_bytes)) as pdf:
+        for page in pdf.pages:
+            page_text = page.extract_text() or ""
+            parts.append(page_text)
+    text = "\n".join(parts)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def extract_text_for_key(key: str) -> Optional[str]:
+    """
+    Download a file and convert it to plain text.
+    Supports HTML / HTM / TXT / PDF.
+    """
+    try:
+        raw = download_bytes(key)
+        lower = key.lower()
+
+        if lower.endswith(".pdf"):
+            text = pdf_to_text(raw)
+        else:
+            # treat any non-PDF as HTML-ish / text
+            text = html_to_text(raw)
+
+        if not text:
+            logger.warning(f"No text extracted from {key}")
+            return None
+
+        # truncate for safety
+        if len(text) > MAX_TEXT_CHARS:
+            text = text[:MAX_TEXT_CHARS]
+
+        return text
+    except Exception as e:
+        logger.exception(f"Failed to extract text for {key}: {e}")
+        return None
+
+
+# -------------------------
+# LLM prompt + call (Hugging Face)
+# -------------------------
+
+SYSTEM_PROMPT = """You are a fact-checking assistant for financial and ESG disclosures.
+
+You receive the full text of a company disclosure (10-K, 20-F, sustainability report, or similar).
+Your task is to propose FACTUAL CLAIMS and classify each claim as either:
+
+- "support": clearly supported by the disclosure, with a specific evidence snippet.
+- "not support": not supported or contradicted by the disclosure, or the disclosure gives
+  insufficient information to verify the claim.
+
+Requirements:
+- Generate AT LEAST 6 claims for each document (ideally between 6 and 10).
+- Across the ENTIRE dataset (all documents combined), the number of "support" and "not support"
+  labels should be as balanced as possible (close to 50/50).
+- For any SINGLE document, you still MUST label each claim correctly based ONLY on the text.
+  Never mislabel a claim just to balance labels.
+- Claims must be concise (1 sentence) and specific enough that they could be checked in the text.
+- For each claim, also output a short evidence snippet (1–3 sentences) copied or very closely
+  paraphrased from the disclosure.
+
+Output format:
+Return a valid JSON array (and nothing else) of objects like:
+[
+  {"claim": "...", "answer": "support", "evidence": "..."},
+  {"claim": "...", "answer": "not support", "evidence": "..."},
+  ...
+]
+
+Where:
+- "answer" is exactly "support" or "not support".
+"""
+
+
+def call_llm_generate_claims(
+    client: InferenceClient,
+    doc_text: str,
+    total_support: int,
+    total_not_support: int,
+) -> List[Dict[str, str]]:
+    """
+    Call the HF model with the document text and parse its JSON response.
+
+    We pass in global label counts so the model can *aim* for balance across the dataset,
+    while still labeling correctly for each document.
+    """
+
+    imbalance = total_support - total_not_support
+
+    if imbalance > 0:
+        #More support than not_support globally
+        balance_hint = (
+            f"There are currently {total_support} 'support' labels and "
+            f"{total_not_support} 'not support' labels in the existing dataset, "
+            f"so 'support' is over-represented by {imbalance} labels.\n"
+            "When you are genuinely uncertain whether a claim is fully supported, "
+            "you may lean slightly towards 'not support'. However, never mislabel: "
+            "if the text clearly supports the claim, still use 'support'."
+        )
+    elif imbalance < 0:
+        # More not_support than support globally
+        balance_hint = (
+            f"There are currently {total_support} 'support' labels and "
+            f"{total_not_support} 'not support' labels in the existing dataset, "
+            f"so 'not support' is over-represented by {-imbalance} labels.\n"
+            "When you are genuinely uncertain, you may lean slightly towards 'support'. "
+            "However, never mislabel: if the text does NOT support the claim, "
+            "or is insufficient, still use 'not support'."
+        )
+    else:
+        balance_hint = (
+            f"The current global label distribution is perfectly balanced: "
+            f"{total_support} 'support' and {total_not_support} 'not support'. "
+            "You do not need to prefer one label over the other; just label correctly."
+        )
+
+    user_prompt = f"""
+We are constructing a GLOBAL dataset of fact-checking claims from many documents.
+
+GLOBAL LABEL COUNTS SO FAR:
+- support: {total_support}
+- not support: {total_not_support}
+
+Guidance:
+{balance_hint}
+
+Now, consider ONLY the following document text:
+
+\"\"\"{doc_text}\"\"\"
+
+
+Generate a JSON array of at least {N_CLAIMS} factual claims for this document, each with:
+- "claim": the statement being made,
+- "answer": "support" or "not support", strictly based on the document,
+- "evidence": a short snippet (1–3 sentences) from the document that justifies your label.
+
+Remember:
+- Always prioritize correctness of each label for this document.
+- Use the global label counts only as a mild tie-breaker when you are truly unsure.
+"""
+
+    resp = client.chat_completion(
+        model=HF_MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt},
+        ],
+        max_tokens=1500,
+        temperature=0.3,
+    )
+
+    text = resp.choices[0].message["content"].strip()
+
+    # Try direct JSON parsing first
+    def try_parse_json(s: str) -> Optional[List[Dict[str, str]]]:
+        try:
+            data = json.loads(s)
+            if isinstance(data, list):
+                return data
+        except Exception:
+            return None
+        return None
+
+    claims = try_parse_json(text)
+    if claims is None:
+        # Attempt to extract the JSON array substring
+        start = text.find("[")
+        end = text.rfind("]")
+        if start != -1 and end != -1 and end > start:
+            snippet = text[start: end + 1]
+            claims = try_parse_json(snippet)
+
+    if claims is None:
+        logger.warning("Failed to parse LLM output as JSON. Raw output:\n%s", text[:500])
+        return []
+
+    # light cleanup: ensure fields exist and answers are only support/not support
+    cleaned: List[Dict[str, str]] = []
+    for c in claims:
+        claim = c.get("claim")
+        ans_raw = (c.get("answer") or "").strip().lower()
+        evid = c.get("evidence")
+
+        if not claim or not evid:
+            continue
+
+        if ans_raw == "support":
+            answer = "support"
+        else:
+            # anything else we collapse to "not support"
+            answer = "not support"
+
+        cleaned.append(
+            {
+                "claim": claim.strip(),
+                "answer": answer,
+                "evidence": evid.strip(),
+            }
+        )
+
+    # ENFORCE MINIMUM: if fewer than N_CLAIMS after cleaning, treat as failure
+    if len(cleaned) < N_CLAIMS:
+        logger.warning(
+            "Only %d cleaned claims (min required %d). Treating as generation failure.",
+            len(cleaned),
+            N_CLAIMS,
+        )
+        return []
+
+    return cleaned
+
+
+# -------------------------
+# Main pipeline
+# -------------------------
+
+def main():
+    logger.info("Using HF model: %s", HF_MODEL)
+    client = InferenceClient(model=HF_MODEL, token=HF_TOKEN)
+
+    # Collect all report keys from edgar/ and site/
+    edgar_keys = list_objects_under_prefix(PREFIX_EDGAR)
+    site_keys = list_objects_under_prefix(PREFIX_SITE)
+
+    all_keys = edgar_keys + site_keys
+    logger.info(
+        "Found %d EDGAR keys, %d site keys, total %d",
+        len(edgar_keys), len(site_keys), len(all_keys)
+    )
+
+    results: Dict[str, Any] = {}
+    num_success = 0
+
+    # global label counters
+    total_support = 0
+    total_not_support = 0
+
+    for key in all_keys:
+        s3_url = f"s3://{S3_BUCKET}/{key}"
+        logger.info("Processing %s", s3_url)
+
+        text = extract_text_for_key(key)
+        if not text:
+            results[s3_url] = {
+                "status": "error",
+                "error": "text_extraction_failed",
+                "answer": "",
+                "sources": [s3_url],
+            }
+            continue
+
+        claims = call_llm_generate_claims(
+            client=client,
+            doc_text=text,
+            total_support=total_support,
+            total_not_support=total_not_support,
+        )
+        if not claims:
+            results[s3_url] = {
+                "status": "error",
+                "error": "llm_generation_failed",
+                "answer": "",
+                "sources": [s3_url],
+            }
+            continue
+
+        # update global counts
+        for c in claims:
+            if c["answer"] == "support":
+                total_support += 1
+            else:
+                total_not_support += 1
+
+        # Wrap claims in the same inner JSON string format as your old pipeline
+        inner = {
+            "claims": [
+                {
+                    "claim": c["claim"],
+                    "evidence": c["evidence"],
+                    "answer": c["answer"],
+                }
+                for c in claims
+            ]
+        }
+        inner_str = json.dumps(inner, ensure_ascii=False, indent=2)
+
+        results[s3_url] = {
+            "status": "success",
+            "answer": inner_str,
+            "sources": [s3_url],
+        }
+        num_success += 1
+
+    #Final batch_results-style object
+    out_obj = {
+        "total_files": len(all_keys),
+        "results": results,
+    }
+
+    #  Save to S3 in /results/ folder from config
+    output_key = OUTPUT_PREFIX + "batch_results.json"
+    s3_write_json(output_key, out_obj)
+
+    logger.info("Finished. Successful files: %d / %d", num_success, len(all_keys))
+    logger.info(
+        "Label distribution in generated claims: support=%d, not_support=%d",
+        total_support, total_not_support
+    )
+    logger.info("batch_results written to: s3://%s/%s", S3_BUCKET, output_key)
+
+
 if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--model_id", default="meta-llama/Llama-3.1-8B-Instruct")
-    parser.add_argument("--quant_4bit", action="store_true")
-    parser.add_argument("--output", default="batch_results.json")
-    parser.add_argument("--quiet", action="store_true", help="Reduce prints")
-    parser.add_argument("--max_files", type=int, default=5, help="Max number of S3 files to process")
-
-    args = parser.parse_args()
-
-    if args.quiet:
-        VERBOSE = False
-
-    claim_number = 3
-    question = (
-        f'You are a label creator of ESG report, read the report and then generate only {claim_number} claims related to the report, '
-        'include verbatim evidence, and an answer among "support", "not support", or "don\'t know". Output pure JSON (no markdown).'
-    )
-
-    process_batch_s3(
-        cfg=CFG,
-        question=question,
-        model_id=args.model_id,
-        quant_4bit=args.quant_4bit,
-        output_filename=args.output,
-        max_files=args.max_files,
-    )
+    main()
